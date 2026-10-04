@@ -633,5 +633,14 @@ function agroFoto(){const x=document.getElementById('pesquisaFoto'); if(x)x.scro
 function agroCatalogo(){const x=document.getElementById('v13Search'); if(x){x.scrollIntoView({behavior:'smooth'});x.focus();}else alert('Abra Daninhas e Insetos.');}
 function agroTalhoes(){const x=document.querySelector('.v13-map'); if(x)x.scrollIntoView({behavior:'smooth'}); else alert('Abra o mapa dos talhões.');}
 function agroMaquinas(){const x=[...document.querySelectorAll('h2,h3')].find(e=>/máquin/i.test(e.textContent)); if(x)x.scrollIntoView({behavior:'smooth'}); else alert('Abra o módulo Máquinas.');}
+</script><script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('./sw.js')
+        .then((reg) => console.log('Service Worker registrado com sucesso!', reg))
+        .catch((err) => console.log('Erro ao registrar Service Worker:', err));
+    });
+  }
 </script>
+
 </body></html>
