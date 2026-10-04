@@ -750,6 +750,86 @@ async function identificarPorFoto(event) {
 document.addEventListener('DOMContentLoaded', () => {
   renderizarCatalogo(bancoEspecies);
 });
+// BANCO DE DADOS DE PRAGAS/DANINHAS COM IMAGENS
+const bancoEspecies = [
+  { 
+    nome: "Lagarta-das-vagens", 
+    cientifico: "Spodoptera eridania", 
+    tipo: "Inseto-praga", 
+    cultura: "Soja, Feijão", 
+    foto: "https://images.unsplash.com/photo-1535083783855-76ae62b2914e?w=300",
+    desc: "Ataca folhas e vagens, reduzindo o rendimento de grãos."
+  },
+  { 
+    nome: "Capim-amargoso", 
+    cientifico: "Digitaria insularis", 
+    tipo: "Planta daninha", 
+    cultura: "Soja, Milho", 
+    foto: "https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=300",
+    desc: "Gramínea perene de difícil controle após o perfilhamento."
+  },
+  { 
+    nome: "Percevejo-marrom", 
+    cientifico: "Euschistus heros", 
+    tipo: "Inseto-praga", 
+    cultura: "Soja", 
+    foto: "https://images.unsplash.com/photo-1589656966895-2f33e7653819?w=300",
+    desc: "Ataca vagens e grãos em formação causando chochamento."
+  },
+  { 
+    nome: "Buva", 
+    cientifico: "Conyza bonariensis", 
+    tipo: "Planta daninha", 
+    cultura: "Soja, Milho", 
+    foto: "https://images.unsplash.com/photo-1530836369250-ef72a3f5cda8?w=300",
+    desc: "Alta produção de sementes dispersas pelo vento."
+  }
+];
+
+let categoriaFiltro = 'Todos';
+
+function renderizarCatalogo(lista) {
+  const container = document.getElementById('catResultsV11');
+  container.innerHTML = '';
+
+  if (lista.length === 0) {
+    container.innerHTML = '<p style="grid-column: 1/-1; color: #777;">Nenhum registro encontrado.</p>';
+    return;
+  }
+
+  lista.forEach(item => {
+    const card = document.createElement('div');
+    card.style.cssText = 'border: 1px solid #e0e0e0; border-radius: 10px; overflow: hidden; background: #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.05); text-align: center;';
+    card.innerHTML = `
+      <img src="${item.foto}" alt="${item.nome}" style="width: 100%; height: 100px; object-fit: cover; background: #f0f0f0;">
+      <div style="padding: 8px;">
+        <strong style="display: block; font-size: 13px; color: #333; margin-bottom: 2px;">${item.nome}</strong>
+        <span style="font-size: 10px; color: #666; display: block; font-style: italic;">${item.cientifico}</span>
+      </div>
+    `;
+    container.appendChild(card);
+  });
+}
+
+function buscarCatalogoV11() {
+  const termo = document.getElementById('catBuscaV11').value.toLowerCase();
+  const filtrados = bancoEspecies.filter(item => {
+    const bateCat = (categoriaFiltro === 'Todos' || item.tipo === categoriaFiltro);
+    const bateTexto = item.nome.toLowerCase().includes(termo) || item.cientifico.toLowerCase().includes(termo);
+    return bateCat && bateTexto;
+  });
+  renderizarCatalogo(filtrados);
+}
+
+function filtrarCatV11(cat, el) {
+  categoriaFiltro = cat;
+  buscarCatalogoV11();
+}
+
+// Inicializar lista ao carregar a página
+document.addEventListener('DOMContentLoaded', () => {
+  renderizarCatalogo(bancoEspecies);
+});
 
 
 </body></html>
