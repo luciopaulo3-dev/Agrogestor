@@ -45,60 +45,50 @@ const pages={
  manutencao:['🛠️ Manutenção',`<div class="panel"><div class="grid"><div><label>Máquina</label><input id="xMach" placeholder="Trator 7J230"></div><div><label>Horímetro atual</label><input id="xHor" type="number"></div><div><label>Serviço</label><input id="xServ" placeholder="Troca de óleo e filtros"></div><div><label>Próximo em (h)</label><input id="xNext" type="number"></div></div><button class="primary" onclick="addMaint()">Registrar</button></div><div class="panel"><div id="maintList"></div></div>`],
  checklist:['📋 Checklist',`<div class="panel"><h3>Liberação de máquina</h3><div id="checks"></div><button class="primary" onclick="checkAll()">Conferir liberação</button><div id="checkResult"></div></div>`],
  relatorios:['📊 Relatórios',`<div class="panel"><h3>Solicitar relatório</h3><div class="panel" style="margin:0 0 12px"><label><b>Solicitação em linguagem natural</b><div style="display:flex;gap:8px;align-items:stretch"><input id="rComando" style="flex:1" placeholder="Ex.: relatório da soja do Talhão 3, do plantio até hoje" onkeydown="if(event.key==='Enter')solicitarRelatorio()"><button type="button" class="secondary" id="btnVozRelatorio" onclick="iniciarVozRelatorio()" title="Falar solicitação" style="min-width:58px;font-size:22px">🎙️</button></div></label><div id="vozStatus" class="muted" style="margin:6px 0">Toque no microfone e fale seu pedido de relatório.</div><button class="primary" onclick="solicitarRelatorio()">Solicitar relatório</button><div class="muted">Ex.: “relatório do milho do Talhão 2 de 01/10/2026 até hoje”.</div></div><div class="grid"><label>Tipo<select id="rTipo" onchange="gerarRelatorio()"><option value="geral">Resumo geral</option><option value="operacoes">Operações realizadas</option><option value="maquinas">Máquinas e horas</option><option value="talhoes">Talhões e culturas</option><option value="manutencao">Manutenções</option><option value="estoque">Estoque</option><option value="financeiro">Resumo financeiro</option></select></label><label>Período inicial<input id="rIni" type="date" onchange="gerarRelatorio()"></label><label>Período final<input id="rFim" type="date" onchange="gerarRelatorio()"></label><label>Filtro cultura/talhão<input id="rFiltro" placeholder="Ex.: soja ou Talhão 01" oninput="gerarRelatorio()"></label></div><div class="actions"><button class="primary" onclick="gerarRelatorio()">Gerar relatório</button><button class="secondary" onclick="window.print()">Imprimir / salvar PDF</button><button class="secondary" onclick="exportReportCSV()">Exportar CSV</button><button class="secondary" onclick="exportData()">Backup dos dados</button><button class="secondary" onclick="clearData()">Limpar dados</button></div></div><div class="panel"><h3>Resultado</h3><div id="report"></div></div>`]  ,alvos:[`🐛 Daninhas & Insetos`,`
-  <div class="panel"><!-- MÓDULO DE DANINHAS E INSETOS EXPANDIDO -->
-<div class="panel cat-wrap" id="catalogoPesquisa">
-  <h3 style="margin-top:0">🌿 Catálogo Pesquisável & Identificador IA</h3>
-  <p class="muted">Pesquise pelo nome comum/científico ou tire uma foto para identificar por Inteligência Artificial.</p>
+  <div class="panel"><!-- NOVO PAINEL DE PRAGAS E DANINHAS -->
+<div class="panel" style="padding: 16px; background: #ffffff; border-radius: 12px; border: 1px solid #e0e0e0; margin-bottom: 20px;">
+  <h2 style="color: #2e7d32; margin-top: 0; margin-bottom: 12px;">Pragas & Daninhas</h2>
 
-  <!-- Campo de Pesquisa e Botão de Câmera -->
-  <div class="cat-search" style="display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap;">
-    <input id="catBuscaV11" type="search" placeholder="Pesquisar planta ou inseto..." style="flex:1; padding:10px; border-radius:8px; border:1px solid #ccc;">
-    <button class="primary" type="button" onclick="buscarCatalogoV11()" style="padding:10px 16px;">Pesquisar</button>
-    
-    <!-- Botão Câmera IA -->
-    <label for="inputFotoIA" style="background:#2e7d32; color:#fff; padding:10px 14px; border-radius:8px; cursor:pointer; font-weight:bold; display:inline-flex; align-items:center; gap:6px;">
-      📷 Tirar Foto (IA)
-    </label>
-    <input type="file" id="inputFotoIA" accept="image/*" capture="environment" style="display:none;" onchange="identificarPorFoto(event)">
-  </div>
-
-  <!-- Status / Retorno da IA -->
-  <div id="statusIA" style="display:none; margin-bottom:12px; padding:10px; background:#e8f5e9; border-radius:8px; font-size:14px; color:#1b5e20;"></div>
-
-  <!-- Filtros -->
-  <div class="cat-tabs" id="catTabsV11" style="display:flex; gap:8px; margin-bottom:12px;">
-    <button class="active" onclick="filtrarCatV11('Todos', this)">Todos</button>
-    <button onclick="filtrarCatV11('Planta daninha', this)">🌿 Daninhas</button>
-    <button onclick="filtrarCatV11('Inseto-praga', this)">🐛 Insetos/Pragas</button>
-  </div>
-
-  <div id="catCountV11" class="cat-count" style="font-weight:bold; margin-bottom:8px;"></div>
-  <div id="catResultsV11" class="cat-results"></div>
-</div>
-
-    <div class="grid">
-      <div>
-        <label>Data<input id="ocData" type="date"></label>
-        <label>Talhão<input id="ocTalhao" placeholder="Ex.: Talhão 3"></label>
-        <label>Cultura<select id="ocCultura"><option>Soja</option><option>Milho</option><option>Milheto</option><option>Outra</option></select></label>
-        <label>Tipo<select id="ocTipo"><option>Planta daninha</option><option>Inseto-praga</option></select></label>
-        <label>Alvo<input id="ocNome" placeholder="Ex.: caruru, pé-de-galinha, percevejo"></label>
-        <label>Nível<select id="ocNivel"><option>Baixo</option><option>Médio</option><option>Alto</option><option>Crítico</option></select></label>
-        <label>Área afetada (ha)<input id="ocArea" type="number" min="0" step="0.01"></label>
-        <label>📷 Foto da ocorrência
-          <input id="ocFoto" type="file" accept="image/*" capture="environment" onchange="previewFoto(this)">
-          <img id="fotoPreview" class="preview-photo" alt="Prévia da foto">
-        </label>
-        <label>Observações<textarea id="ocObs" rows="3"></textarea></label>
-        <button class="primary" onclick="salvarOcorrenciaComFotoOriginal()">Salvar ocorrência</button>
-      </div>
-      <div>
-        <h3>🔎 Catálogo de monitoramento</h3>
-        <input id="buscaAlvo" oninput="renderAlvos()" placeholder="Pesquisar caruru, lagarta, percevejo...">
-        <div id="catalogoAlvos" style="margin-top:10px"></div>
-      </div>
+  <!-- Blocos de Contagem no Topo -->
+  <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 8px;">
+    <div onclick="filtrarCatV11('Inseto-praga', this)" style="background: #4caf50; color: white; border-radius: 10px; padding: 10px 4px; text-align: center; cursor: pointer;">
+      <div style="font-size: 18px; font-weight: bold;">389</div>
+      <div style="font-size: 11px;">Insetos</div>
+    </div>
+    <div onclick="filtrarCatV11('Doença', this)" style="background: #4caf50; color: white; border-radius: 10px; padding: 10px 4px; text-align: center; cursor: pointer;">
+      <div style="font-size: 18px; font-weight: bold;">391</div>
+      <div style="font-size: 11px;">Doenças</div>
+    </div>
+    <div onclick="filtrarCatV11('Planta daninha', this)" style="background: #4caf50; color: white; border-radius: 10px; padding: 10px 4px; text-align: center; cursor: pointer;">
+      <div style="font-size: 18px; font-weight: bold;">359</div>
+      <div style="font-size: 11px;">Plantas</div>
     </div>
   </div>
+
+  <div onclick="filtrarCatV11('Todos', this)" style="background: #4caf50; color: white; border-radius: 10px; padding: 10px; text-align: center; margin-bottom: 16px; cursor: pointer;">
+    <div style="font-size: 18px; font-weight: bold;">210</div>
+    <div style="font-size: 12px;">Culturas</div>
+  </div>
+
+  <!-- Busca e Câmera IA -->
+  <div style="display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap;">
+    <input id="catBuscaV11" type="search" placeholder="Pesquisar no catálogo..." style="flex: 1; min-width: 150px; padding: 10px; border-radius: 8px; border: 1px solid #ccc;">
+    <button type="button" onclick="buscarCatalogoV11()" style="background: #2e7d32; color: white; border: none; padding: 10px 14px; border-radius: 8px; cursor: pointer;">Buscar</button>
+    
+    <label for="inputFotoIA" style="background: #1b5e20; color: #fff; padding: 10px 12px; border-radius: 8px; cursor: pointer; font-weight: bold; display: inline-flex; align-items: center; gap: 4px;">
+      📷 Foto IA
+    </label>
+    <input type="file" id="inputFotoIA" accept="image/*" capture="environment" style="display: none;" onchange="identificarPorFoto(event)">
+  </div>
+
+  <!-- Retorno da Câmera IA -->
+  <div id="statusIA" style="display: none; margin-bottom: 12px; padding: 10px; background: #e8f5e9; border-radius: 8px; font-size: 13px; color: #1b5e20;"></div>
+
+  <!-- Resultados e Sugestões com Cartões -->
+  <h3 style="color: #2e7d32; margin-bottom: 8px; font-size: 16px;">Sugestões & Resultados</h3>
+  <div id="catResultsV11" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px;"></div>
+</div>
+
 
   <div class="panel">
     <h3>🧪 Registrar controle realizado</h3>
