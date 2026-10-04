@@ -1,0 +1,16 @@
+{
+  "short_name": "Agrogestor",
+  "name": "Agrogestor - Gestão Agrícola",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/628/628324.png",
+      "type": "image/png",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": "./index.html",
+  "background_color": "#2e7d32",
+  "theme_color": "#2e7d32",
+  "display": "standalone",
+  "orientation": "portrait"
+}
