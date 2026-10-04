@@ -1,0 +1,637 @@
+<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Agrogestor V15</title><style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f3f6f2;color:#182018}header{background:#205b2a;color:#fff;padding:16px;position:sticky;top:0;z-index:10}header h1{margin:0;font-size:25px}.nav{display:flex;gap:7px;overflow:auto;padding:9px;background:#fff;position:sticky;top:69px;z-index:9}.nav button{border:0;border-radius:18px;padding:9px 13px;background:#e7eee7;white-space:nowrap}.nav button.active{background:#205b2a;color:#fff}.wrap{max-width:1000px;margin:auto;padding:14px}.page{display:none}.page.active{display:block}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.card,.panel{background:#fff;border-radius:14px;padding:15px;margin-bottom:12px;box-shadow:0 1px 5px #0001}.card b{font-size:21px}.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}label{font-size:13px;font-weight:bold;display:block;margin-bottom:4px}input,select,textarea{width:100%;padding:10px;border:1px solid #ccd5cc;border-radius:9px;background:#fff}button.primary{background:#205b2a;color:#fff;border:0;border-radius:9px;padding:11px 14px;font-weight:bold;cursor:pointer}button.secondary{border:0;border-radius:9px;padding:10px;background:#e7eee7}.result{background:#eef7ed;border-left:4px solid #205b2a;padding:12px;border-radius:8px;margin-top:10px}.muted{color:#647064;font-size:13px}.danger{background:#f8e5e5!important;color:#9a2020}.ok{color:#17652a;font-weight:bold}table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:8px;border-bottom:1px solid #e2e7e2}.check{display:flex;gap:8px;align-items:center;padding:8px 0}.check input{width:auto}.tag{display:inline-block;padding:4px 8px;border-radius:12px;background:#e7eee7;font-size:12px}.actions{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}.empty{padding:15px;text-align:center;color:#667066}.big{font-size:27px;font-weight:bold}.notice{padding:11px;border-radius:9px;background:#fff7df;border-left:4px solid #d5a600;margin-bottom:12px}
+@media(max-width:650px){.grid,.grid3{grid-template-columns:1fr}.cards{grid-template-columns:1fr 1fr}.nav{top:69px}.wrap{padding:10px}}
+@media print{.nav,.actions,header button{display:none!important}.page{display:block!important}.panel{box-shadow:none}.reportGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}table{width:100%;border-collapse:collapse}th,td{border:1px solid #ccc;padding:6px;text-align:left}}\n</style>
+<style>
+.photo-card{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.photo-card img{width:150px;height:110px;object-fit:cover;border-radius:10px;border:1px solid #ddd;background:#f3f3f3}
+.photo-upload{border:1px dashed #aaa;padding:10px;border-radius:10px}
+.preview-photo{max-width:220px;max-height:160px;border-radius:10px;margin-top:8px;display:none}
+</style>
+
+<style>
+.catalog-photo{width:100%;height:190px;object-fit:cover;border-radius:12px 12px 0 0;background:#eee}
+.catalog-card{overflow:hidden}
+.catalog-card .body{padding:14px}
+.catalog-card h3{margin-top:0}
+.catalog-meta{font-size:.9rem;margin:5px 0}
+.catalog-card details{margin-top:10px}
+.catalog-card summary{cursor:pointer;font-weight:600}
+.catalog-links{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.catalog-links a,.catalog-links button{font-size:.88rem}
+</style>
+<style>
+.cat-wrap{margin-top:12px}.cat-search{display:flex;gap:8px}.cat-search input{font-size:16px;padding:13px}.cat-tabs{display:flex;gap:7px;overflow:auto;margin:10px 0}.cat-tabs button{border:0;border-radius:20px;padding:9px 13px;background:#e8eee8;white-space:nowrap}.cat-tabs button.active{background:#205b2a;color:#fff}.cat-count{font-size:13px;color:#667066;margin:8px 0}.cat-results{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.cat-item{background:#fff;border-radius:14px;overflow:hidden;box-shadow:0 1px 6px #0001}.cat-item img{width:100%;height:210px;object-fit:cover;background:#eef2ee}.cat-body{padding:14px}.cat-body h3{margin:0 0 3px}.cat-scientific{font-style:italic;color:#526052;font-size:13px}.cat-badges{display:flex;gap:5px;flex-wrap:wrap;margin:9px 0}.cat-badge{background:#e8f0e8;border-radius:12px;padding:4px 8px;font-size:11px}.cat-body details{margin-top:8px}.cat-body summary{cursor:pointer;font-weight:700}.cat-links{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}.cat-links a,.cat-links button{border:0;border-radius:9px;padding:9px 10px;text-decoration:none;cursor:pointer}.cat-online{background:#fff7df;border-left:4px solid #d4a000;padding:12px;border-radius:9px;margin-top:12px}.cat-empty{padding:18px;text-align:center;background:#fff;border-radius:12px;color:#667066}.cat-photo-note{font-size:11px;color:#6b756b;margin-top:5px}.cat-possible{border-left:4px solid #d4a000;background:#fff9e8;padding:10px;border-radius:8px;margin-top:10px;font-size:13px}@media(max-width:650px){.cat-results{grid-template-columns:1fr}.cat-search{flex-direction:column}}
+</style></head><body>
+<header><h1>🌱 Agrogestor</h1><div class="muted" style="color:#dcebdc">Gestão e operação da fazenda</div></header>
+<div class="nav" id="nav"></div><main class="wrap" id="app">
+
+
+
+</main>
+<script>
+const pages={
+ dashboard:['🏠 Painel',`<div class="cards"><div class="card"><span class="muted">Área cadastrada</span><div class="big" id="dashArea">0 ha</div></div><div class="card"><span class="muted">Custo planejado</span><div class="big" id="dashCost">R$ 0</div></div><div class="card"><span class="muted">Máquinas</span><div class="big" id="dashMachines">0</div></div><div class="card"><span class="muted">Operações</span><div class="big" id="dashOps">0</div></div></div><div class="panel"><h3>Resumo da safra</h3><div id="dashSummary"></div></div><div class="panel"><h3>Atalhos</h3><div class="actions"><button class="primary" onclick="go('talhoes')">+ Talhão</button><button class="primary" onclick="go('plantio')">Calcular plantio</button><button class="primary" onclick="go('checklist')">Liberar máquina</button><button class="secondary" onclick="go('operacoes')">Registrar operação</button></div></div>`],
+ talhoes:['🗺️ Talhões',`<div class="panel"><h3>Novo talhão</h3><div class="grid"><div><label>Nome</label><input id="tNome" placeholder="Talhão 01"></div><div><label>Área (ha)</label><input id="tArea" type="number"></div><div><label>Cultura</label><select id="tCult"><option>Soja</option><option>Milho</option><option>Milheto</option><option>Outra</option></select></div><div><label>Safra</label><input id="tSafra" placeholder="2026/27"></div></div><div class="actions"><button class="primary" onclick="addTalhao()">Salvar talhão</button></div></div><div class="panel"><h3>Talhões cadastrados</h3><div id="talhoesList"></div></div>`],
+ plantio:['🌱 Plantio',`<div class="notice">Informe os dados da plantadeira. O Agrogestor calcula largura, capacidade, sementes e adubo. A regulagem mecânica final deve ser conferida no manual do fabricante e por calibração no campo.</div><div class="panel"><div class="grid3"><div><label>Linhas</label><input id="pLin" type="number" value="24"></div><div><label>Espaçamento (cm)</label><input id="pEsp" type="number" value="60"></div><div><label>Velocidade (km/h)</label><input id="pVel" type="number" value="7" step="0.1"></div><div><label>População (plantas/ha)</label><input id="pPop" type="number" value="250000"></div><div><label>Germinação (%)</label><input id="pGer" type="number" value="95"></div><div><label>Pureza (%)</label><input id="pPur" type="number" value="99"></div><div><label>Área (ha)</label><input id="pArea" type="number" value="100"></div><div><label>Adubo (kg/ha)</label><input id="pAd" type="number" value="250"></div><div><label>Horas/dia</label><input id="pHoras" type="number" value="10"></div><div><label>Eficiência (%)</label><input id="pEf" type="number" value="80"></div></div><div class="actions"><button class="primary" onclick="calcPlantio()">Calcular</button></div><div id="pResult"></div></div>`],
+ maquinas:['🚜 Máquinas',`<div class="panel"><h3>Cadastrar máquina</h3><div class="grid"><div><label>Máquina</label><input id="mNome" placeholder="John Deere 7J230"></div><div><label>Tipo</label><select id="mTipo"><option>Trator</option><option>Plantadeira</option><option>Pulverizador</option><option>Distribuidor</option><option>Colheitadeira</option><option>Outro</option></select></div><div><label>Horímetro</label><input id="mHor" type="number"></div><div><label>Consumo (L/h)</label><input id="mCons" type="number"></div></div><button class="primary" onclick="addMachine()">Salvar</button></div><div class="panel"><div id="machineList"></div></div>`],
+ implementos:['🔧 Implementos',`<div class="panel"><h3>Banco de regulagens</h3><div class="grid"><div><label>Implemento</label><input id="iNome" placeholder="Plantadeira 24 linhas"></div><div><label>Cultura</label><select id="iCult"><option>Soja</option><option>Milho</option><option>Milheto</option></select></div><div><label>Espaçamento</label><input id="iEsp" placeholder="60 cm"></div><div><label>Regulagem / observações</label><input id="iReg" placeholder="Disco, população, adubo..."></div></div><button class="primary" onclick="addImplement()">Salvar regulagem</button></div><div class="panel"><div id="implList"></div></div>`],
+ pulverizacao:['🧪 Pulverização',`<div class="panel"><div class="grid3"><div><label>Área (ha)</label><input id="sArea" type="number" value="100"></div><div><label>Volume (L/ha)</label><input id="sVol" type="number" value="100"></div><div><label>Produto (L ou kg/ha)</label><input id="sDose" type="number" value="2"></div><div><label>Capacidade tanque (L)</label><input id="sTank" type="number" value="2000"></div><div><label>Vazão por ponta (L/min)</label><input id="sFlow" type="number" value="1.5"></div><div><label>Nº de pontas</label><input id="sNoz" type="number" value="40"></div><div><label>Velocidade (km/h)</label><input id="sSpeed" type="number" value="12"></div></div><button class="primary" onclick="calcSpray()">Calcular aplicação</button><div id="sResult"></div></div>`],
+ colheita:['🌽 Colheita',`<div class="panel"><div class="grid3"><div><label>Área (ha)</label><input id="cArea" type="number" value="100"></div><div><label>Produtividade (sc/ha)</label><input id="cProd" type="number" value="100"></div><div><label>Umidade (%)</label><input id="cUmid" type="number" value="22"></div><div><label>Largura plataforma (m)</label><input id="cLarg" type="number" value="7.6"></div><div><label>Velocidade (km/h)</label><input id="cVel" type="number" value="5"></div><div><label>Eficiência (%)</label><input id="cEf" type="number" value="75"></div></div><button class="primary" onclick="calcHarvest()">Calcular</button><div id="cResult"></div></div>`],
+ custos:['💰 Custos',`<div class="panel"><h3>Custo por hectare</h3><div class="grid3"><div><label>Sementes R$/ha</label><input id="k1" type="number" value="0"></div><div><label>Adubo R$/ha</label><input id="k2" type="number" value="0"></div><div><label>Defensivos R$/ha</label><input id="k3" type="number" value="0"></div><div><label>Diesel R$/ha</label><input id="k4" type="number" value="0"></div><div><label>Operações R$/ha</label><input id="k5" type="number" value="0"></div><div><label>Outros R$/ha</label><input id="k6" type="number" value="0"></div><div><label>Área (ha)</label><input id="kArea" type="number" value="100"></div><div><label>Produtividade (sc/ha)</label><input id="kProd" type="number" value="100"></div><div><label>Preço R$/saca</label><input id="kPrice" type="number" value="0"></div></div><button class="primary" onclick="calcCost()">Calcular custo</button><div id="kResult"></div></div>`],
+ estoque:['📦 Estoque',`<div class="panel"><div class="grid"><div><label>Item</label><input id="eNome" placeholder="Adubo 20-00-20"></div><div><label>Quantidade</label><input id="eQtd" type="number"></div><div><label>Unidade</label><select id="eUn"><option>kg</option><option>L</option><option>un</option><option>sacas</option></select></div><div><label>Estoque mínimo</label><input id="eMin" type="number"></div></div><button class="primary" onclick="addStock()">Salvar</button></div><div class="panel"><div id="stockList"></div></div>`],
+ operacoes:['📝 Operações',`<div class="panel"><div class="grid"><div><label>Data</label><input id="oData" type="date"></div><div><label>Operação</label><select id="oTipo"><option>Plantio</option><option>Adubação</option><option>Pulverização</option><option>Colheita</option><option>Preparo do solo</option><option>Transporte</option></select></div><div><label>Área (ha)</label><input id="oArea" type="number"></div><div><label>Máquina</label><input id="oMach"></div><div><label>Talhão</label><input id="oTal"></div><div><label>Observação</label><input id="oObs"></div></div><button class="primary" onclick="addOp()">Registrar operação</button></div><div class="panel"><div id="opList"></div></div>`],
+ manutencao:['🛠️ Manutenção',`<div class="panel"><div class="grid"><div><label>Máquina</label><input id="xMach" placeholder="Trator 7J230"></div><div><label>Horímetro atual</label><input id="xHor" type="number"></div><div><label>Serviço</label><input id="xServ" placeholder="Troca de óleo e filtros"></div><div><label>Próximo em (h)</label><input id="xNext" type="number"></div></div><button class="primary" onclick="addMaint()">Registrar</button></div><div class="panel"><div id="maintList"></div></div>`],
+ checklist:['📋 Checklist',`<div class="panel"><h3>Liberação de máquina</h3><div id="checks"></div><button class="primary" onclick="checkAll()">Conferir liberação</button><div id="checkResult"></div></div>`],
+ relatorios:['📊 Relatórios',`<div class="panel"><h3>Solicitar relatório</h3><div class="panel" style="margin:0 0 12px"><label><b>Solicitação em linguagem natural</b><div style="display:flex;gap:8px;align-items:stretch"><input id="rComando" style="flex:1" placeholder="Ex.: relatório da soja do Talhão 3, do plantio até hoje" onkeydown="if(event.key==='Enter')solicitarRelatorio()"><button type="button" class="secondary" id="btnVozRelatorio" onclick="iniciarVozRelatorio()" title="Falar solicitação" style="min-width:58px;font-size:22px">🎙️</button></div></label><div id="vozStatus" class="muted" style="margin:6px 0">Toque no microfone e fale seu pedido de relatório.</div><button class="primary" onclick="solicitarRelatorio()">Solicitar relatório</button><div class="muted">Ex.: “relatório do milho do Talhão 2 de 01/10/2026 até hoje”.</div></div><div class="grid"><label>Tipo<select id="rTipo" onchange="gerarRelatorio()"><option value="geral">Resumo geral</option><option value="operacoes">Operações realizadas</option><option value="maquinas">Máquinas e horas</option><option value="talhoes">Talhões e culturas</option><option value="manutencao">Manutenções</option><option value="estoque">Estoque</option><option value="financeiro">Resumo financeiro</option></select></label><label>Período inicial<input id="rIni" type="date" onchange="gerarRelatorio()"></label><label>Período final<input id="rFim" type="date" onchange="gerarRelatorio()"></label><label>Filtro cultura/talhão<input id="rFiltro" placeholder="Ex.: soja ou Talhão 01" oninput="gerarRelatorio()"></label></div><div class="actions"><button class="primary" onclick="gerarRelatorio()">Gerar relatório</button><button class="secondary" onclick="window.print()">Imprimir / salvar PDF</button><button class="secondary" onclick="exportReportCSV()">Exportar CSV</button><button class="secondary" onclick="exportData()">Backup dos dados</button><button class="secondary" onclick="clearData()">Limpar dados</button></div></div><div class="panel"><h3>Resultado</h3><div id="report"></div></div>`]  ,alvos:[`🐛 Daninhas & Insetos`,`
+  <div class="panel">
+    <h2>🐛 Controle de Daninhas e Insetos</h2>
+    <p class="muted">Registre ocorrências, monitore a infestação e acompanhe o controle por talhão.</p>
+    <div class="panel cat-wrap" id="catalogoPesquisa">
+      <h3 style="margin-top:0">🔎 Catálogo pesquisável — Daninhas e Insetos</h3>
+      <p class="muted">Pesquise pelo nome comum ou científico. O catálogo fica aqui dentro do ícone <b>🌿 Daninhas & Insetos</b>.</p>
+      <div class="cat-search">
+        <input id="catBuscaV11" type="search" placeholder="Pesquisar qualquer planta daninha ou inseto..." autocomplete="off">
+        <button class="primary" type="button" onclick="buscarCatalogoV11()">🔎 Pesquisar</button>
+      </div>
+      <div class="cat-tabs" id="catTabsV11">
+        <button class="active" onclick="filtrarCatV11('Todos',this)">Todos</button>
+        <button onclick="filtrarCatV11('Planta daninha',this)">🌿 Daninhas</button>
+        <button onclick="filtrarCatV11('Inseto-praga',this)">🐛 Insetos</button>
+      </div>
+      <div id="catCountV11" class="cat-count"></div>
+      <div id="catResultsV11" class="cat-results"></div>
+      <div id="catOnlineV11"></div>
+    </div>
+
+    <div class="grid">
+      <div>
+        <label>Data<input id="ocData" type="date"></label>
+        <label>Talhão<input id="ocTalhao" placeholder="Ex.: Talhão 3"></label>
+        <label>Cultura<select id="ocCultura"><option>Soja</option><option>Milho</option><option>Milheto</option><option>Outra</option></select></label>
+        <label>Tipo<select id="ocTipo"><option>Planta daninha</option><option>Inseto-praga</option></select></label>
+        <label>Alvo<input id="ocNome" placeholder="Ex.: caruru, pé-de-galinha, percevejo"></label>
+        <label>Nível<select id="ocNivel"><option>Baixo</option><option>Médio</option><option>Alto</option><option>Crítico</option></select></label>
+        <label>Área afetada (ha)<input id="ocArea" type="number" min="0" step="0.01"></label>
+        <label>📷 Foto da ocorrência
+          <input id="ocFoto" type="file" accept="image/*" capture="environment" onchange="previewFoto(this)">
+          <img id="fotoPreview" class="preview-photo" alt="Prévia da foto">
+        </label>
+        <label>Observações<textarea id="ocObs" rows="3"></textarea></label>
+        <button class="primary" onclick="salvarOcorrenciaComFotoOriginal()">Salvar ocorrência</button>
+      </div>
+      <div>
+        <h3>🔎 Catálogo de monitoramento</h3>
+        <input id="buscaAlvo" oninput="renderAlvos()" placeholder="Pesquisar caruru, lagarta, percevejo...">
+        <div id="catalogoAlvos" style="margin-top:10px"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>🧪 Registrar controle realizado</h3>
+    <div class="grid">
+      <label>Data<input id="ctData" type="date"></label>
+      <label>Talhão<input id="ctTalhao" placeholder="Ex.: Talhão 3"></label>
+      <label>Alvo<input id="ctAlvo" placeholder="Daninha ou inseto"></label>
+      <label>Método<select id="ctMetodo"><option>Herbicida</option><option>Inseticida</option><option>Controle mecânico</option><option>Controle manual</option><option>Biológico</option><option>Monitoramento</option></select></label>
+      <label>Produto/ação<input id="ctProduto"></label>
+      <label>Dose/descrição<input id="ctDose"></label>
+      <label>Resultado<select id="ctResultado"><option>Pendente</option><option>Bom</option><option>Parcial</option><option>Insuficiente</option></select></label>
+      <label>Observações<textarea id="ctObs" rows="2"></textarea></label>
+    </div>
+    <button class="primary" onclick="salvarControle()">Salvar controle</button>
+    <div class="notice" style="margin-top:10px">⚠️ O aplicativo registra o manejo. A recomendação e escolha de defensivos deve seguir bula, registro e orientação do responsável técnico.</div>
+  </div>
+
+  <div class="panel"><h3>📋 Histórico</h3><div id="historicoAlvos"></div></div>
+  `]
+};
+let db=JSON.parse(localStorage.getItem('agrogestor_v2')||'{"talhoes":[],"machines":[],"implements":[],"stock":[],"ops":[],"maint":[]}');
+function save(){localStorage.setItem('agrogestor_v2',JSON.stringify(db));refresh()}
+function go(p){location.hash=p;render()}
+function render(){let p=location.hash.slice(1)||'dashboard';if(!pages[p])p='dashboard';document.getElementById('nav').innerHTML=Object.entries(pages).map(([k,v])=>`<button class="${k==p?'active':''}" onclick="go('${k}')">${v[0]}</button>`).join('');document.getElementById('app').innerHTML=pages[p][1];refresh();}
+function n(id){return +(document.getElementById(id)?.value||0)}
+function calcPlantio(){let lin=n('pLin'),esp=n('pEsp')/100,vel=n('pVel'),pop=n('pPop'),ger=n('pGer')/100,pur=n('pPur')/100,area=n('pArea'),ad=n('pAd'),horas=n('pHoras'),ef=n('pEf')/100;let larg=lin*esp,teo=vel*larg/10,real=teo*ef,plantas=pop/(ger*pur),total=plantas*area,adtotal=ad*area;document.getElementById('pResult').innerHTML=`<div class=result><b>Largura:</b> ${larg.toFixed(2)} m<br><b>Capacidade teórica:</b> ${teo.toFixed(2)} ha/h<br><b>Capacidade prática:</b> ${real.toFixed(2)} ha/h<br><b>Produção diária (${horas} h):</b> ${(real*horas).toFixed(1)} ha/dia<br><b>Sementes necessárias:</b> ${Math.round(plantas).toLocaleString('pt-BR')} sementes/ha<br><b>Total de sementes:</b> ${Math.round(total).toLocaleString('pt-BR')} sementes<br><b>Adubo total:</b> ${adtotal.toLocaleString('pt-BR')} kg</div>`}
+function calcSpray(){let area=n('sArea'),vol=n('sVol'),dose=n('sDose'),tank=n('sTank'),flow=n('sFlow'),noz=n('sNoz'),speed=n('sSpeed');let total=area*vol,prod=area*dose,tanks=Math.ceil(total/tank),calcFlow=noz*flow,volumeHa=600*calcFlow/(speed*1000),ok=Math.abs(volumeHa-vol)/Math.max(vol,1)<=.1;document.getElementById('sResult').innerHTML=`<div class=result><b>Calda total:</b> ${total.toLocaleString('pt-BR')} L<br><b>Produto total:</b> ${prod.toLocaleString('pt-BR')} L/kg<br><b>Tanques:</b> ${tanks}<br><b>Vazão total das pontas:</b> ${calcFlow.toFixed(2)} L/min<br><b>Volume calculado:</b> ${volumeHa.toFixed(1)} L/ha<br><span class="${ok?'ok':''}">${ok?'✓ Vazão próxima do volume informado.':'⚠ Confira ponta, pressão, velocidade e calibração.'}</span></div>`}
+function calcHarvest(){let area=n('cArea'),prod=n('cProd'),larg=n('cLarg'),vel=n('cVel'),ef=n('cEf')/100,cap=larg*vel/10*ef,total=area*prod;document.getElementById('cResult').innerHTML=`<div class=result><b>Capacidade prática:</b> ${cap.toFixed(2)} ha/h<br><b>Produção:</b> ${total.toLocaleString('pt-BR')} sacas<br><b>Estimativa de horas:</b> ${(area/cap).toFixed(1)} h</div>`}
+function calcCost(){let vals=['k1','k2','k3','k4','k5','k6'].map(n);let ha=n('kArea'),sc=n('kProd'),price=n('kPrice'),c=vals.reduce((a,b)=>a+b,0),total=c*ha,receita=sc*price*ha;document.getElementById('kResult').innerHTML=`<div class=result><b>Custo:</b> R$ ${c.toFixed(2)}/ha<br><b>Custo total:</b> R$ ${total.toLocaleString('pt-BR',{minimumFractionDigits:2})}<br><b>Receita estimada:</b> R$ ${receita.toLocaleString('pt-BR',{minimumFractionDigits:2})}<br><b>Margem bruta estimada:</b> R$ ${(receita-total).toLocaleString('pt-BR',{minimumFractionDigits:2})}</div>`}
+function addTalhao(){db.talhoes.push({nome:tNome.value,area:n('tArea'),cult:tCult.value,safra:tSafra.value});save()};function addMachine(){db.machines.push({nome:mNome.value,tipo:mTipo.value,hor:n('mHor'),cons:n('mCons')});save()};function addImplement(){db.implements.push({nome:iNome.value,cult:iCult.value,esp:iEsp.value,reg:iReg.value});save()};function addStock(){db.stock.push({nome:eNome.value,qtd:n('eQtd'),un:eUn.value,min:n('eMin')});save()};function addOp(){db.ops.push({data:oData.value,tipo:oTipo.value,area:n('oArea'),mach:oMach.value,tal:oTal.value,obs:oObs.value});save()};function addMaint(){db.maint.push({mach:xMach.value,hor:n('xHor'),serv:xServ.value,next:n('xNext')});save()}
+function list(id,arr,fn){document.getElementById(id).innerHTML=arr.length?arr.map(fn).join(''):'<div class=empty>Nenhum registro cadastrado.</div>'}
+
+const catalogoAlvosData=[
+ {n:"Caruru",t:"Planta daninha",i:"Folhas largas; observar espécie e estádio.",m:"Registrar densidade, reboleiras e estádio.",a:"Identificar a espécie antes de definir o manejo."},
+ {n:"Capim-pé-de-galinha",t:"Planta daninha",i:"Gramínea; observar touceiras e escapes.",m:"Registrar plantas/m² e distribuição no talhão.",a:"Confirmar identificação e estádio."},
+ {n:"Buva",t:"Planta daninha",i:"Folhas em roseta; registrar estádio.",m:"Mapear focos e densidade.",a:"Registrar histórico de manejo e escapes."},
+ {n:"Percevejo",t:"Inseto-praga",i:"Observar adultos e ninfas nas plantas.",m:"Fazer amostragem padronizada e registrar adultos/ninfas.",a:"Considerar monitoramento e critérios técnicos antes do controle."},
+ {n:"Lagartas",t:"Inseto-praga",i:"Procurar lagartas, ovos e sintomas de desfolha.",m:"Registrar número por planta/ponto e estádio.",a:"Confirmar espécie antes da decisão de controle."},
+ {n:"Mosca-branca",t:"Inseto-praga",i:"Observar adultos e formas jovens nas folhas.",m:"Registrar incidência e evolução da população.",a:"Acompanhar tendência ao longo das avaliações."}
+];
+function esc2(v){return String(v??'').replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]))}
+function getArr(k){try{return JSON.parse(localStorage.getItem(k)||'[]')}catch(e){return[]}}
+function putArr(k,v){localStorage.setItem(k,JSON.stringify(v))}
+function renderAlvos(){
+ const box=document.getElementById('catalogoAlvos'); if(!box)return;
+ const q=(document.getElementById('buscaAlvo')?.value||'').toLowerCase();
+ const list=catalogoAlvosData.filter(x=>(x.n+x.t).toLowerCase().includes(q));
+ box.innerHTML=list.map(x=>`<div class="card"><b>${x.n}</b> <span class="tag">${x.t}</span><p><b>Identificação:</b> ${x.i}</p><p><b>Monitoramento:</b> ${x.m}</p><p><b>Atenção:</b> ${x.a}</p><button class="secondary" onclick="usarAlvo('${x.n}','${x.t}')">Registrar este alvo</button></div>`).join('')||'<p class="empty">Nenhum alvo encontrado.</p>';
+}
+function usarAlvo(nome,tipo){
+ const n=document.getElementById('ocNome'), t=document.getElementById('ocTipo');
+ if(n)n.value=nome; if(t)t.value=tipo;
+}
+function salvarOcorrencia(){
+ const arr=getArr('agrogestor_ocorrencias_v2');
+ arr.push({data:document.getElementById('ocData')?.value||new Date().toISOString().slice(0,10),talhao:document.getElementById('ocTalhao')?.value||'',cultura:document.getElementById('ocCultura')?.value||'',tipo:document.getElementById('ocTipo')?.value||'',nome:document.getElementById('ocNome')?.value||'',nivel:document.getElementById('ocNivel')?.value||'',area:document.getElementById('ocArea')?.value||0,obs:document.getElementById('ocObs')?.value||''});
+ putArr('agrogestor_ocorrencias_v2',arr); alert('Ocorrência salva.'); refresh();
+}
+function salvarControle(){
+ const arr=getArr('agrogestor_controles_v2');
+ arr.push({data:document.getElementById('ctData')?.value||new Date().toISOString().slice(0,10),talhao:document.getElementById('ctTalhao')?.value||'',alvo:document.getElementById('ctAlvo')?.value||'',metodo:document.getElementById('ctMetodo')?.value||'',produto:document.getElementById('ctProduto')?.value||'',dose:document.getElementById('ctDose')?.value||'',resultado:document.getElementById('ctResultado')?.value||'',obs:document.getElementById('ctObs')?.value||''});
+ putArr('agrogestor_controles_v2',arr); alert('Controle salvo.'); refresh();
+}
+function renderHistoricoAlvos(){
+ const el=document.getElementById('historicoAlvos'); if(!el)return;
+ const o=getArr('agrogestor_ocorrencias_v2'), c=getArr('agrogestor_controles_v2');
+ el.innerHTML=(o.length?'<h4>Ocorrências</h4>'+o.slice().reverse().map(x=>`<div class="card photo-card">${x.foto?`<img src="${x.foto}" alt="Foto da ocorrência">`:''}<div><b>${esc2(x.nome)}</b> · ${esc2(x.tipo)} · <span class="tag">${esc2(x.nivel)}</span><br>${esc2(x.data)} · ${esc2(x.talhao)} · ${esc2(x.cultura)} · ${esc2(x.area)} ha<br>${esc2(x.obs)}</div></div>`).join(''):'<p class="empty">Nenhuma ocorrência registrada.</p>')
+ + (c.length?'<h4>Controles</h4>'+c.slice().reverse().map(x=>`<div class="card"><b>${esc2(x.alvo)}</b> · ${esc2(x.metodo)} · resultado: ${esc2(x.resultado)}<br>${esc2(x.data)} · ${esc2(x.talhao)} · ${esc2(x.produto)} ${esc2(x.dose)}</div>`).join(''):'<p class="empty">Nenhum controle registrado.</p>');
+}
+
+function refresh(){if(document.getElementById('talhoesList'))list('talhoesList',db.talhoes,(x,i)=>`<div class=card><b>${x.nome}</b><br>${x.area} ha · ${x.cult} · safra ${x.safra}</div>`);if(document.getElementById('machineList'))list('machineList',db.machines,x=>`<div class=card><b>${x.nome}</b><br>${x.tipo} · ${x.hor||0} h · ${x.cons||0} L/h</div>`);if(document.getElementById('implList'))list('implList',db.implements,x=>`<div class=card><b>${x.nome}</b><br>${x.cult} · ${x.esp}<br><span class=muted>${x.reg}</span></div>`);if(document.getElementById('stockList'))list('stockList',db.stock,x=>`<div class=card><b>${x.nome}</b><br>${x.qtd} ${x.un} · mínimo ${x.min} ${x.un} ${x.qtd<=x.min?'<span class=tag>REPOR</span>':''}</div>`);if(document.getElementById('opList'))list('opList',db.ops.slice().reverse(),x=>`<div class=card><b>${x.tipo}</b> · ${x.area} ha<br>${x.data||''} · ${x.mach||''} · ${x.tal||''}<br>${x.obs||''}</div>`);if(document.getElementById('maintList'))list('maintList',db.maint.slice().reverse(),x=>`<div class=card><b>${x.mach}</b><br>${x.serv} · atual ${x.hor} h · próximo ${x.next} h</div>`);if(document.getElementById('checks')){let a=['Nível do óleo','Nível da água / arrefecimento','Combustível','Pneus / esteiras','Lubrificação','Mangueiras e conexões','Correias / correntes','Implemento regulado','Proteções e segurança','Operador autorizado'];document.getElementById('checks').innerHTML=a.map((x,i)=>`<label class=check><input type=checkbox id=ck${i}> ${x}</label>`).join('')}if(document.getElementById('report'))gerarRelatorio();renderAlvos();renderHistoricoAlvos();initCatV11();if(document.getElementById('dashArea')){let area=db.talhoes.reduce((s,x)=>s+x.area,0);document.getElementById('dashArea').textContent=area.toFixed(1)+' ha';document.getElementById('dashMachines').textContent=db.machines.length;document.getElementById('dashOps').textContent=db.ops.length;document.getElementById('dashCost').textContent='R$ '+db.ops.reduce((s,x)=>s+(x.cost||0),0).toFixed(0);document.getElementById('dashSummary').innerHTML=area?`<p>${db.talhoes.length} talhão(ões) cadastrados, total de <b>${area.toFixed(1)} ha</b>.</p>`:'<p class=empty>Cadastre seus talhões para começar.</p>'}}
+
+function dateOk(d,ini,fim){if(!d)return true;return (!ini||d>=ini)&&(!fim||d<=fim)}
+function esc(v){return String(v??'').replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]))}
+
+function iniciarVozRelatorio(){
+ const SpeechRecognition=window.SpeechRecognition||window.webkitSpeechRecognition;
+ const input=document.getElementById('rComando'), status=document.getElementById('vozStatus'), btn=document.getElementById('btnVozRelatorio');
+ if(!SpeechRecognition){ status.textContent='O reconhecimento de voz não está disponível neste navegador. Você pode digitar o pedido.'; return; }
+ const rec=new SpeechRecognition(); rec.lang='pt-BR'; rec.continuous=false; rec.interimResults=true; rec.maxAlternatives=1;
+ btn.disabled=true; btn.textContent='⏺️'; status.textContent='🎙️ Ouvindo... fale o relatório que você deseja.';
+ rec.onresult=e=>{ let texto=''; for(let i=e.resultIndex;i<e.results.length;i++) texto+=e.results[i][0].transcript; input.value=texto.trim(); };
+ rec.onerror=e=>{ status.textContent=e.error==='not-allowed'?'Permissão do microfone negada. Libere o microfone nas configurações do navegador.':'Não consegui entender o áudio. Tente novamente.'; };
+ rec.onend=()=>{ btn.disabled=false; btn.textContent='🎙️'; if(input.value.trim()){ status.textContent='Pedido reconhecido. Toque em “Solicitar relatório” para gerar.'; } else if(!status.textContent.includes('Permissão')) status.textContent='Nenhum pedido foi reconhecido. Tente novamente.'; };
+ try{rec.start();}catch(e){btn.disabled=false;btn.textContent='🎙️';status.textContent='Não foi possível iniciar o microfone. Tente novamente.';}
+}
+function solicitarRelatorio(){
+ let c=(document.getElementById('rComando')?.value||'').toLowerCase().trim(); if(!c)return;
+ let tipo='geral';
+ if(/operaç|plantio|aduba|pulveriza|colheita|preparo|transporte/.test(c)) tipo='operacoes';
+ if(/máquina|maquina|trator|colheitadeira|horímetro|horimetro/.test(c)) tipo='maquinas';
+ if(/talhão|talhao|cultura|safra/.test(c)&&!/operaç|plantio|aduba|pulveriza|colheita/.test(c)) tipo='talhoes';
+ if(/manuten/.test(c)) tipo='manutencao'; if(/estoque|insumo|adubo|sementes|produto/.test(c)) tipo='estoque'; if(/custo|financeiro|despesa|receita/.test(c)) tipo='financeiro';
+ const sel=document.getElementById('rTipo'); if(sel)sel.value=tipo;
+ let filtro='';
+ const tm=c.match(/talh(?:ão|ao)\s*(?:n[ºo]?\s*)?([a-z0-9 -]+)/i); if(tm){filtro=tm[1].trim().replace(/[,.;].*$/,'');}
+ const culturas=['soja','milho','milheto','algodão','algodao','feijão','feijao']; const cult=culturas.find(x=>c.includes(x)); if(cult)filtro=cult;
+ const hoje=new Date().toISOString().slice(0,10);
+ let ini='',fim=''; const dates=[...c.matchAll(/(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})/g)].map(m=>`${m[3]}-${m[2].padStart(2,'0')}-${m[1].padStart(2,'0')}`);
+ if(dates.length>=1)ini=dates[0]; if(dates.length>=2)fim=dates[1]; else if(/até hoje|ate hoje|até o momento|ate o momento/.test(c))fim=hoje;
+ document.getElementById('rFiltro').value=filtro; document.getElementById('rIni').value=ini; document.getElementById('rFim').value=fim; gerarRelatorio();
+ const report=document.getElementById('report'); report.insertAdjacentHTML('afterbegin',`<div class="result"><b>Solicitação interpretada:</b> ${esc(document.getElementById('rComando').value)}<br><b>Tipo:</b> ${esc(sel?.selectedOptions[0]?.text||tipo)} · <b>Filtro:</b> ${esc(filtro||'todos')} · <b>Período:</b> ${ini||'início'} a ${fim||'hoje'}</div>`);
+}
+function gerarRelatorio(){let el=document.getElementById('report');if(!el)return;let tipo=document.getElementById('rTipo')?.value||'geral',ini=document.getElementById('rIni')?.value||'',fim=document.getElementById('rFim')?.value||'',f=(document.getElementById('rFiltro')?.value||'').toLowerCase().trim();let ops=db.ops.filter(x=>dateOk(x.data,ini,fim)&&(!f||JSON.stringify(x).toLowerCase().includes(f)));let area=db.talhoes.reduce((a,x)=>a+(+x.area||0),0);let title=document.getElementById('rTipo')?.selectedOptions[0]?.text||'Resumo geral';let html=`<div class="reportHead"><b>AGROGESTOR</b><br>Relatório: ${esc(title)}<br>Período: ${ini||'início'} a ${fim||'hoje'}</div>`;
+if(tipo==='geral')html+=`<div class="reportGrid"><div>Talhões<br><b>${db.talhoes.length}</b></div><div>Área cadastrada<br><b>${area.toFixed(1)} ha</b></div><div>Máquinas<br><b>${db.machines.length}</b></div><div>Implementos<br><b>${db.implements.length}</b></div><div>Operações<br><b>${ops.length}</b></div><div>Manutenções<br><b>${db.maint.length}</b></div></div>`;
+if(tipo==='operacoes')html+=ops.length?`<table><tr><th>Data</th><th>Operação</th><th>Área</th><th>Máquina</th><th>Talhão</th></tr>${ops.map(x=>`<tr><td>${esc(x.data)}</td><td>${esc(x.tipo)}</td><td>${x.area||0} ha</td><td>${esc(x.mach)}</td><td>${esc(x.tal)}</td></tr>`).join('')}</table><p><b>Total operado:</b> ${ops.reduce((a,x)=>a+(+x.area||0),0).toFixed(1)} ha</p>`:'<div class=empty>Nenhuma operação encontrada.</div>';
+if(tipo==='maquinas')html+=db.machines.length?`<table><tr><th>Máquina</th><th>Tipo</th><th>Horímetro</th><th>Consumo</th></tr>${db.machines.map(x=>`<tr><td>${esc(x.nome)}</td><td>${esc(x.tipo)}</td><td>${x.hor||0} h</td><td>${x.cons||0} L/h</td></tr>`).join('')}</table>`:'<div class=empty>Nenhuma máquina cadastrada.</div>';
+if(tipo==='talhoes')html+=db.talhoes.length?`<table><tr><th>Talhão</th><th>Área</th><th>Cultura</th><th>Safra</th></tr>${db.talhoes.filter(x=>!f||JSON.stringify(x).toLowerCase().includes(f)).map(x=>`<tr><td>${esc(x.nome)}</td><td>${x.area||0} ha</td><td>${esc(x.cult)}</td><td>${esc(x.safra)}</td></tr>`).join('')}</table>`:'<div class=empty>Nenhum talhão encontrado.</div>';
+if(tipo==='manutencao')html+=db.maint.length?`<table><tr><th>Máquina</th><th>Serviço</th><th>Atual</th><th>Próximo</th></tr>${db.maint.map(x=>`<tr><td>${esc(x.mach)}</td><td>${esc(x.serv)}</td><td>${x.hor||0} h</td><td>${x.next||0} h</td></tr>`).join('')}</table>`:'<div class=empty>Nenhuma manutenção registrada.</div>';
+if(tipo==='estoque')html+=db.stock.length?`<table><tr><th>Item</th><th>Quantidade</th><th>Mínimo</th><th>Status</th></tr>${db.stock.map(x=>`<tr><td>${esc(x.nome)}</td><td>${x.qtd||0} ${esc(x.un)}</td><td>${x.min||0}</td><td>${(+x.qtd||0)<= (+x.min||0)?'REPOR':'OK'}</td></tr>`).join('')}</table>`:'<div class=empty>Nenhum item no estoque.</div>';
+if(tipo==='financeiro'){let total=ops.reduce((a,x)=>a+(+x.cost||0),0),porHa=ops.reduce((a,x)=>a+(+x.area||0),0);html+=`<div class="result"><b>Custo registrado:</b> R$ ${total.toLocaleString('pt-BR',{minimumFractionDigits:2})}<br><b>Área operada:</b> ${porHa.toFixed(1)} ha<br><b>Custo médio:</b> R$ ${porHa?(total/porHa).toFixed(2):'0,00'}/ha</div>`}
+el.innerHTML=html}
+function exportReportCSV(){let tipo=document.getElementById('rTipo')?.value||'geral';let rows=[['AGROGESTOR','Relatório',tipo],['Data',new Date().toLocaleString('pt-BR')]];if(tipo==='operacoes')rows.push(['Data','Operação','Área (ha)','Máquina','Talhão'],...db.ops.map(x=>[x.data,x.tipo,x.area,x.mach,x.tal]));else if(tipo==='talhoes')rows.push(['Talhão','Área (ha)','Cultura','Safra'],...db.talhoes.map(x=>[x.nome,x.area,x.cult,x.safra]));else if(tipo==='maquinas')rows.push(['Máquina','Tipo','Horímetro','Consumo L/h'],...db.machines.map(x=>[x.nome,x.tipo,x.hor,x.cons]));else if(tipo==='manutencao')rows.push(['Máquina','Serviço','Atual','Próximo'],...db.maint.map(x=>[x.mach,x.serv,x.hor,x.next]));else if(tipo==='estoque')rows.push(['Item','Quantidade','Unidade','Mínimo'],...db.stock.map(x=>[x.nome,x.qtd,x.un,x.min]));else rows.push(['Indicador','Valor'],['Talhões',db.talhoes.length],['Área (ha)',db.talhoes.reduce((a,x)=>a+(+x.area||0),0)],['Máquinas',db.machines.length],['Operações',db.ops.length]);let csv=rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(';')).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+csv],{type:'text/csv;charset=utf-8'}));a.download='agrogestor-relatorio.csv';a.click()}
+function checkAll(){let a=[...document.querySelectorAll('#checks input')],ok=a.every(x=>x.checked);document.getElementById('checkResult').innerHTML=`<div class="result ${ok?'':'danger'}"><b>${ok?'✓ MÁQUINA LIBERADA':'⚠ MÁQUINA NÃO LIBERADA'}</b><br>${ok?'Todos os itens foram conferidos.':'Conclua todos os itens antes de iniciar a operação.'}</div>`}
+function exportData(){let blob=new Blob([JSON.stringify(db,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='agrogestor-dados.json';a.click()};function clearData(){if(confirm('Apagar todos os dados deste aparelho?')){localStorage.removeItem('agrogestor_v2');location.reload()}}
+render();
+</script>
+<script>
+(function(){
+  const keyO = 'agrogestor_ocorrencias_v1';
+  const keyC = 'agrogestor_controles_v1';
+  const $ = id => document.getElementById(id);
+  const load = k => { try { return JSON.parse(localStorage.getItem(k) || '[]'); } catch(e) { return []; } };
+  const save = (k,v) => localStorage.setItem(k, JSON.stringify(v));
+
+  function esc(v){
+    return String(v ?? '').replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));
+  }
+  function render(){
+    const o = load(keyO), c = load(keyC);
+    $('listaOcorrencias').innerHTML = o.length ? o.slice().reverse().map((x,i)=>`
+      <div class="list-item">
+        <strong>${esc(x.nome)}</strong> — ${esc(x.tipo)} — <b>${esc(x.nivel)}</b><br>
+        ${esc(x.data)} | ${esc(x.talhao)} | ${esc(x.cultura)} | ${esc(x.area)} ha
+        ${x.obs ? `<br><small>${esc(x.obs)}</small>` : ''}
+      </div>`).join('') : '<p>Nenhuma ocorrência registrada.</p>';
+
+    $('listaControles').innerHTML = c.length ? c.slice().reverse().map(x=>`
+      <div class="list-item">
+        <strong>${esc(x.alvo)}</strong> — ${esc(x.metodo)} — resultado: <b>${esc(x.resultado)}</b><br>
+        ${esc(x.data)} | ${esc(x.talhao)} | ${esc(x.produto)} ${x.dose ? ' | '+esc(x.dose) : ''}
+        ${x.obs ? `<br><small>${esc(x.obs)}</small>` : ''}
+      </div>`).join('') : '<p>Nenhum controle registrado.</p>';
+  }
+
+  $('formOcorrencia')?.addEventListener('submit', e => {
+    e.preventDefault();
+    const arr = load(keyO);
+    arr.push({
+      data:$('ocData').value, talhao:$('ocTalhao').value, cultura:$('ocCultura').value,
+      tipo:$('ocTipo').value, nome:$('ocNome').value, nivel:$('ocNivel').value,
+      area:$('ocArea').value, obs:$('ocObs').value
+    });
+    save(keyO,arr); e.target.reset(); $('ocData').valueAsDate = new Date(); render();
+  });
+
+  $('formControle')?.addEventListener('submit', e => {
+    e.preventDefault();
+    const arr = load(keyC);
+    arr.push({
+      data:$('ctData').value, talhao:$('ctTalhao').value, alvo:$('ctAlvo').value,
+      metodo:$('ctMetodo').value, produto:$('ctProduto').value, dose:$('ctDose').value,
+      resultado:$('ctResultado').value, obs:$('ctObs').value
+    });
+    save(keyC,arr); e.target.reset(); $('ctData').valueAsDate = new Date(); render();
+  });
+
+  if ($('ocData')) $('ocData').valueAsDate = new Date();
+  if ($('ctData')) $('ctData').valueAsDate = new Date();
+  render();
+})();
+</script>
+
+
+<script>
+(function(){
+ const alvos = [
+  {nome:"Caruru", tipo:"Planta daninha", identificacao:"Folhas largas; observar estádio e distribuição no talhão.", monitoramento:"Registrar plantas/m² ou ocorrência por pontos de amostragem; observar reboleiras e escapes.", atencao:"Identificar a espécie corretamente antes de definir manejo."},
+  {nome:"Capim-pé-de-galinha", tipo:"Planta daninha", identificacao:"Gramínea; observar touceiras, estádio e presença de escapes.", monitoramento:"Mapear reboleiras e registrar plantas/m² ou porcentagem de cobertura.", atencao:"Evitar confundir com outras gramíneas; identificação correta orienta o manejo."},
+  {nome:"Percevejo", tipo:"Inseto-praga", identificacao:"Inspecionar plantas e estruturas reprodutivas; registrar espécie quando possível.", monitoramento:"Fazer amostragem padronizada por pontos e registrar ninfas e adultos separadamente.", atencao:"Não aplicar somente pela presença; considerar monitoramento e critérios técnicos."},
+  {nome:"Lagartas", tipo:"Inseto-praga", identificacao:"Procurar lagartas, ovos e sintomas de desfolha/ataque.", monitoramento:"Registrar número por planta/ponto, estádio da lagarta e percentual de dano.", atencao:"Confirmar espécie e estádio antes de qualquer decisão de controle."},
+  {nome:"Mosca-branca", tipo:"Inseto-praga", identificacao:"Observar adultos na face inferior das folhas e formas jovens.", monitoramento:"Registrar incidência por folhas/plantas e evolução ao longo das avaliações.", atencao:"Acompanhar tendência da população e condições da lavoura."},
+  {nome:"Buva", tipo:"Planta daninha", identificacao:"Folhas em roseta; registrar estádio e escapes.", monitoramento:"Mapear focos e densidade por ponto de amostragem.", atencao:"Identificar estádio e histórico de manejo do talhão."}
+ ];
+ function esc(v){return String(v||"").replace(/[&<>"']/g,s=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[s]));}
+ function render(){
+   const q=(document.getElementById('buscaAlvo')?.value||'').toLowerCase();
+   const list=alvos.filter(a=>(a.nome+a.tipo).toLowerCase().includes(q));
+   document.getElementById('catalogoAlvos').innerHTML=list.map(a=>`
+    <div class="card">
+      <h3>${esc(a.nome)}</h3>
+      <p><b>${esc(a.tipo)}</b></p>
+      <p><b>Identificação:</b> ${esc(a.identificacao)}</p>
+      <p><b>Monitoramento:</b> ${esc(a.monitoramento)}</p>
+      <p><b>Atenção:</b> ${esc(a.atencao)}</p>
+      <button type="button" onclick="document.getElementById('ocNome').value='${esc(a.nome)}'; document.getElementById('ocTipo').value='${a.tipo==='Planta daninha'?'Planta daninha':'Inseto-praga'}'; document.getElementById('pragas').scrollIntoView({behavior:'smooth'})">Registrar ocorrência</button>
+    </div>`).join('') || '<p>Nenhum alvo encontrado.</p>';
+ }
+ document.getElementById('buscaAlvo')?.addEventListener('input',render);
+ render();
+})();
+</script>
+
+
+<script>
+const fotosCatalogo = {
+ "Caruru":"https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Amaranthus_retroflexus_plant.jpg/320px-Amaranthus_retroflexus_plant.jpg",
+ "Capim-pé-de-galinha":"https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Eleusine_indica_2.jpg/320px-Eleusine_indica_2.jpg",
+ "Buva":"https://upload.wikimedia.org/wikipedia/commons/thumb/4/4e/Conyza_canadensis_20080719.jpg/320px-Conyza_canadensis_20080719.jpg"
+};
+function previewFoto(input){
+ const img=document.getElementById('fotoPreview');
+ if(!img || !input.files?.[0]) return;
+ const r=new FileReader();
+ r.onload=e=>{img.src=e.target.result;img.style.display='block';};
+ r.readAsDataURL(input.files[0]);
+}
+const _renderAlvosFotos = window.renderAlvos;
+window.renderAlvos = function(){
+ const box=document.getElementById('catalogoAlvos'); if(!box)return;
+ const q=(document.getElementById('buscaAlvo')?.value||'').toLowerCase();
+ const list=catalogoAlvosData.filter(x=>(x.n+x.t).toLowerCase().includes(q));
+ box.innerHTML=list.map(x=>`
+ <div class="card photo-card">
+   <img src="${fotosCatalogo[x.n]||''}" alt="${x.n}" onerror="this.style.visibility='hidden'">
+   <div style="flex:1;min-width:220px">
+    <b>${x.n}</b> <span class="tag">${x.t}</span>
+    <p><b>Identificação:</b> ${x.i}</p>
+    <p><b>Monitoramento:</b> ${x.m}</p>
+    <p><b>Atenção:</b> ${x.a}</p>
+    <button class="secondary" onclick="usarAlvo('${x.n}','${x.t}')">Registrar este alvo</button>
+   </div>
+ </div>`).join('')||'<p class="empty">Nenhum alvo encontrado.</p>';
+};
+function salvarOcorrenciaComFotoOriginal(){
+ const input=document.getElementById('ocFoto');
+ if(!input?.files?.[0]) return salvarOcorrencia();
+ const r=new FileReader();
+ r.onload=()=>{
+   const arr=getArr('agrogestor_ocorrencias_v2');
+   arr.push({data:document.getElementById('ocData')?.value||new Date().toISOString().slice(0,10),
+   talhao:document.getElementById('ocTalhao')?.value||'',cultura:document.getElementById('ocCultura')?.value||'',
+   tipo:document.getElementById('ocTipo')?.value||'',nome:document.getElementById('ocNome')?.value||'',
+   nivel:document.getElementById('ocNivel')?.value||'',area:document.getElementById('ocArea')?.value||0,
+   obs:document.getElementById('ocObs')?.value||'',foto:r.result});
+   putArr('agrogestor_ocorrencias_v2',arr); alert('Ocorrência salva com foto.'); document.getElementById('ocFoto').value=''; document.getElementById('fotoPreview').style.display='none'; refresh();
+ };
+ r.readAsDataURL(input.files[0]);
+}
+</script>
+
+<script>
+const CAT_V11=[
+ {nome:'Caruru',cient:'Amaranthus spp.',tipo:'Planta daninha',cult:'Soja, Milho',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Amaranthus_retroflexus_plant.jpg',desc:'Grupo de plantas de folhas largas. A espécie deve ser confirmada antes da decisão de manejo.',ident:'Observar folhas, caule, inflorescência e, quando presente, espinhos. Fotografar a planta inteira e detalhes.',dano:'Compete por água, luz e nutrientes e pode dificultar a colheita em altas infestações.',mon:'Registrar espécie, estádio, densidade e distribuição no talhão.',fonte:'https://www.embrapa.br/pt/tema-plantas-daninhas/sobre-o-tema'},
+ {nome:'Capim-pé-de-galinha',cient:'Eleusine indica',tipo:'Planta daninha',cult:'Soja, Milho',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Eleusine_indica.jpg',desc:'Gramínea comum em áreas agrícolas, geralmente formando touceiras.',ident:'Observar folhas estreitas e inflorescência digitada. Confirme a espécie quando houver dúvida.',dano:'Compete com a cultura e pode apresentar dificuldade de controle em áreas com histórico de resistência.',mon:'Mapear reboleiras, registrar estádio, densidade e escapes após manejo.',fonte:'https://www.embrapa.br/pt/tema-plantas-daninhas/sobre-o-tema'},
+ {nome:'Buva',cient:'Conyza spp.',tipo:'Planta daninha',cult:'Soja, Milho',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Conyza_canadensis_20080719.jpg',desc:'Grupo de espécies que apresenta roseta quando jovem e caule ereto na fase adulta.',ident:'Fotografar roseta, folhas, caule e inflorescência para diferenciar espécies.',dano:'Pode competir fortemente com a cultura; populações resistentes a herbicidas são um ponto importante de atenção.',mon:'Mapear focos, estádio, densidade e escapes; manter histórico do talhão.',fonte:'https://www.embrapa.br/pt/tema-plantas-daninhas/sobre-o-tema'},
+ {nome:'Trapoeraba',cient:'Commelina spp.',tipo:'Planta daninha',cult:'Soja, Milho',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Commelina_benghalensis.jpg',desc:'Plantas de folhas largas e crescimento rasteiro/ascendente, com espécies importantes em lavouras.',ident:'Observar folhas, bainhas, nós e flores; fotografar detalhes da planta.',dano:'Compete por recursos e pode dificultar o manejo e a colheita.',mon:'Registrar espécie, estádio, densidade e distribuição.',fonte:'https://www.embrapa.br/pt/tema-plantas-daninhas/sobre-o-tema'},
+ {nome:'Picão-preto',cient:'Bidens spp.',tipo:'Planta daninha',cult:'Soja, Milho',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Bidens_pilosa_plant.jpg',desc:'Planta de folhas variáveis e sementes que podem se dispersar facilmente.',ident:'Observar folhas, capítulos e sementes; fotografar principalmente folhas e estruturas reprodutivas.',dano:'Compete com a cultura e pode aumentar o banco de sementes do solo.',mon:'Mapear focos e registrar estádio e densidade.',fonte:'https://ainfo.cnptia.embrapa.br/digital/bitstream/doc/1166619/1/DOC-274-3-ed.pdf'},
+ {nome:'Leiteiro',cient:'Euphorbia heterophylla',tipo:'Planta daninha',cult:'Soja, Milho',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Euphorbia_heterophylla.jpg',desc:'Planta de folhas largas, conhecida como leiteiro, com látex ao romper tecidos.',ident:'Observar folhas, presença de látex e estruturas reprodutivas.',dano:'Competição com a soja e possibilidade de seleção de populações de difícil manejo.',mon:'Registrar espécie, estádio e escapes após aplicações.',fonte:'https://ainfo.cnptia.embrapa.br/digital/bitstream/doc/1166619/1/DOC-274-3-ed.pdf'},
+ {nome:'Percevejo-marrom',cient:'Euschistus heros',tipo:'Inseto-praga',cult:'Soja',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Euschistus_heros.jpg',desc:'Percevejo sugador importante da soja, principalmente nas estruturas reprodutivas.',ident:'Observar adultos e ninfas; fotografar o dorso e a parte ventral quando possível.',dano:'A alimentação em vagens e grãos pode afetar rendimento e qualidade.',mon:'Fazer amostragem padronizada e registrar adultos e ninfas por ponto.',fonte:'https://www.embrapa.br/web/agencia-de-informacao-tecnologica/cultivos/soja/producao/manejo-integrado-de-pragas/pragas/pragas-que-atacam-vagens-e-graos/complexo-de-percevejos-sugadores-de-graos'},
+ {nome:'Percevejo-verde',cient:'Nezara viridula',tipo:'Inseto-praga',cult:'Soja',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Nezara_viridula.jpg',desc:'Percevejo associado às vagens e grãos de soja.',ident:'Observar coloração, formato do corpo e ninfas; usar foto para confirmar a espécie.',dano:'A sucção durante o enchimento de grãos pode reduzir qualidade e rendimento.',mon:'Registrar adultos, ninfas e distribuição na área.',fonte:'https://www.embrapa.br/web/agencia-de-informacao-tecnologica/cultivos/soja/producao/manejo-integrado-de-pragas/pragas/pragas-que-atacam-vagens-e-graos/complexo-de-percevejos-sugadores-de-graos'},
+ {nome:'Percevejo-verde-pequeno',cient:'Piezodorus guildinii',tipo:'Inseto-praga',cult:'Soja',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Piezodorus_guildinii.jpg',desc:'Percevejo pequeno associado às estruturas reprodutivas da soja.',ident:'Observar tamanho, coloração e desenho do pronoto; confirmar com material técnico.',dano:'Pode causar danos por sucção em vagens e grãos.',mon:'Registrar adultos e ninfas em amostragens periódicas.',fonte:'https://www.embrapa.br/web/agencia-de-informacao-tecnologica/cultivos/soja/producao/manejo-integrado-de-pragas/pragas/pragas-que-atacam-vagens-e-graos/complexo-de-percevejos-sugadores-de-graos'},
+ {nome:'Lagarta-da-soja',cient:'Anticarsia gemmatalis',tipo:'Inseto-praga',cult:'Soja',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Anticarsia_gemmatalis.jpg',desc:'Lagarta desfolhadora importante da soja.',ident:'Observar tamanho, coloração, pernas e padrão corporal. Fotografe a lagarta inteira.',dano:'A desfolha intensa pode reduzir o potencial produtivo.',mon:'Registrar número de lagartas, tamanho/estádio e percentual de desfolha.',fonte:'https://www.embrapa.br/en/web/agencia-de-informacao-tecnologica/cultivos/soja/producao/manejo-integrado-de-pragas/pragas/pragas-que-atacam-folhas/lagarta-da-soja'},
+ {nome:'Falsa-medideira',cient:'Chrysodeixis includens',tipo:'Inseto-praga',cult:'Soja',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Chrysodeixis_includens.jpg',desc:'Lagarta desfolhadora que pode ocorrer em soja.',ident:'Observar o modo de deslocamento e características corporais; fotografar diferentes ângulos.',dano:'Consome tecido foliar e pode contribuir para desfolha.',mon:'Registrar número por ponto e tamanho das lagartas.',fonte:'https://www.embrapa.br/en/web/pecuaria-sul/busca-de-publicacoes/-/publicacao/449840/manual-de-identificacao-de-insetos-e-outros-invertebrados-da-cultura-da-soja'},
+ {nome:'Mosca-branca',cient:'Bemisia tabaci',tipo:'Inseto-praga',cult:'Soja, Algodão',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Bemisia_tabaci_1.jpg',desc:'Pequeno inseto sugador encontrado principalmente na face inferior das folhas.',ident:'Observar adultos ao movimentar a planta e formas jovens na face inferior das folhas.',dano:'A sucção pode reduzir o vigor e a praga pode estar associada à transmissão de vírus em culturas suscetíveis.',mon:'Registrar incidência por folha/planta e evolução da população.',fonte:'https://www.embrapa.br/'},
+ {nome:'Vaquinha',cient:'Diabrotica speciosa',tipo:'Inseto-praga',cult:'Soja, Milho',foto:'https://commons.wikimedia.org/wiki/Special:Redirect/file/Diabrotica_speciosa.jpg',desc:'Besouro que pode atacar folhas e outras estruturas dependendo da cultura e fase.',ident:'Observar coloração e formato do besouro; fotografar adulto e, se encontrado, larva.',dano:'Pode causar desfolha e danos a raízes em determinados sistemas.',mon:'Registrar adultos, plantas atacadas e distribuição.',fonte:'https://www.embrapa.br/en/web/pecuaria-sul/busca-de-publicacoes/-/publicacao/449840/manual-de-identificacao-de-insetos-e-outros-invertebrados-da-cultura-da-soja'}
+];
+let catFiltroV11='Todos';
+function normV11(s){return String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();}
+function escV11(s){return String(s??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function catFiltradosV11(){const q=normV11(document.getElementById('catBuscaV11')?.value||'');return CAT_V11.filter(x=>catFiltroV11==='Todos'||x.tipo===catFiltroV11).filter(x=>!q||normV11([x.nome,x.cient,x.tipo,x.cult,x.desc].join(' ')).includes(q));}
+function renderCatV11(){
+ const box=document.getElementById('catResultsV11');if(!box)return;const lista=catFiltradosV11();
+ document.getElementById('catCountV11').textContent=lista.length+' resultado(s) no catálogo Agrogestor';
+ box.innerHTML=lista.map(x=>`<article class="cat-item"><img src="${x.foto}" alt="Foto ilustrativa de ${escV11(x.nome)}" onerror="this.style.display='none'"><div class="cat-body"><h3>${escV11(x.nome)}</h3><div class="cat-scientific">${escV11(x.cient)}</div><div class="cat-badges"><span class="cat-badge">${escV11(x.tipo)}</span><span class="cat-badge">${escV11(x.cult)}</span></div><p>${escV11(x.desc)}</p><details><summary>Como identificar</summary><p>${escV11(x.ident)}</p></details><details><summary>Danos / importância</summary><p>${escV11(x.dano)}</p></details><details><summary>Como monitorar</summary><p>${escV11(x.mon)}</p></details><div class="cat-links"><a class="secondary" href="${x.fonte}" target="_blank" rel="noopener noreferrer">📖 Fonte técnica</a><button class="primary" onclick="usarAlvo('${x.nome.replace(/'/g,"\\'")}','${x.tipo.replace(/'/g,"\\'")}');document.getElementById('ocNome')?.scrollIntoView({behavior:'smooth',block:'center'})">📋 Registrar ocorrência</button></div><div class="cat-photo-note">A foto é referência visual; confirme a espécie pelas características técnicas.</div></div></article>`).join('')||'<div class="cat-empty">Nenhum resultado local.</div>';
+ renderOnlineV11();
+}
+function renderOnlineV11(){const q=(document.getElementById('catBuscaV11')?.value||'').trim(),el=document.getElementById('catOnlineV11');if(!el)return;if(!q){el.innerHTML='';return;}const emb=encodeURIComponent(q),g=encodeURIComponent(q+' agricultura');el.innerHTML=`<div class="cat-online"><b>🔎 Busca ampliada para “${escV11(q)}”</b><p style="margin:6px 0">Se ainda não estiver cadastrado, use uma fonte técnica para pesquisar a espécie.</p><div class="cat-links"><a class="secondary" target="_blank" rel="noopener noreferrer" href="https://www.embrapa.br/busca-de-publicacoes?search_api_fulltext=${emb}">🌱 Embrapa</a><a class="secondary" target="_blank" rel="noopener noreferrer" href="https://www.google.com/search?q=${g}">🌐 Pesquisa ampla</a><a class="secondary" target="_blank" rel="noopener noreferrer" href="https://pt.wikipedia.org/w/index.php?search=${emb}">📚 Wikipedia</a></div><div class="cat-possible">⚠️ Para uma planta/inseto desconhecido, registre também uma foto no campo e confirme a identificação antes de decidir o manejo.</div></div>`;}
+function filtrarCatV11(tipo,btn){catFiltroV11=tipo;document.querySelectorAll('#catTabsV11 button').forEach(b=>b.classList.remove('active'));btn?.classList.add('active');renderCatV11();}
+function buscarCatalogoV11(){renderCatV11();}
+function initCatV11(){const i=document.getElementById('catBuscaV11');if(!i)return;i.oninput=renderCatV11;i.onkeydown=e=>{if(e.key==='Enter')buscarCatalogoV11()};renderCatV11();}
+</script>
+
+<!-- AGROGESTOR V12 - PESQUISA POR FOTO -->
+<style>
+.photo-ai{background:#fff;border:1px solid #d9e2d8;border-radius:16px;padding:16px;margin-top:14px}
+.photo-ai h3{margin:0 0 8px}
+.photo-box{border:2px dashed #9bb39c;border-radius:14px;min-height:180px;display:flex;align-items:center;justify-content:center;text-align:center;padding:12px;background:#f7faf6;overflow:hidden}
+.photo-box img{max-width:100%;max-height:320px;border-radius:10px;display:none}
+.photo-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+.photo-actions button,.photo-ai button{border:0;border-radius:10px;padding:11px 14px;background:#205b2a;color:#fff;font-weight:700;cursor:pointer}
+.photo-actions .secondary{background:#edf3ed;color:#205b2a;border:1px solid #cbd9cc}
+.photo-ai input,.photo-ai select{width:100%;padding:11px;border:1px solid #cbd9cc;border-radius:10px;margin-top:8px}
+.photo-result{margin-top:12px;background:#f4f8f3;border-radius:12px;padding:12px;line-height:1.45}
+.small-note{font-size:12px;color:#5c685d}
+</style>
+<section id="pesquisaFoto" class="screen">
+  <div class="card photo-ai">
+    <h2>📷 Identificação por foto</h2>
+    <p>Fotografe uma planta, inseto ou dano. O Agrogestor mostra a foto e cria uma pesquisa técnica para comparar com o catálogo.</p>
+    <div class="photo-box" id="photoBox">
+      <span id="photoHint">Toque em <b>Fotografar</b> ou <b>Escolher foto</b>.</span>
+      <img id="photoPreview" alt="Foto para identificação">
+    </div>
+    <input id="photoInput" type="file" accept="image/*" capture="environment" style="display:none">
+    <div class="photo-actions">
+      <button onclick="document.getElementById('photoInput').click()">📷 Fotografar / Escolher foto</button>
+      <button class="secondary" onclick="document.getElementById('photoInput').value='';document.getElementById('photoPreview').style.display='none';document.getElementById('photoHint').style.display='block'">Limpar</button>
+    </div>
+    <label>O que você acha que é? (opcional)
+      <input id="photoClue" placeholder="Ex.: caruru, capim, lagarta, percevejo...">
+    </label>
+    <label>Cultura
+      <select id="photoCulture">
+        <option value="">Selecione</option><option>Soja</option><option>Milho</option><option>Algodão</option><option>Pastagem</option><option>Outra</option>
+      </select>
+    </label>
+    <div class="photo-actions">
+      <button onclick="agroPhotoSearch('embrapa')">🔎 Pesquisar na Embrapa</button>
+      <button onclick="agroPhotoSearch('web')">🌐 Pesquisar na Web</button>
+    </div>
+    <div class="photo-result" id="photoResult">
+      <b>Como usar:</b> tire uma foto nítida da planta/inseto e, se possível, outra do dano. A identificação por foto é <b>indicativa</b>; confirme a espécie antes de decidir o manejo.
+    </div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const inp=document.getElementById('photoInput');
+  if(!inp) return;
+  inp.addEventListener('change',function(){
+    const f=this.files&&this.files[0]; if(!f)return;
+    const img=document.getElementById('photoPreview');
+    img.src=URL.createObjectURL(f); img.style.display='block';
+    document.getElementById('photoHint').style.display='none';
+    document.getElementById('photoResult').innerHTML='<b>Foto carregada.</b> Agora escolha uma pesquisa técnica. Para melhorar o resultado, informe uma suspeita no campo acima.';
+  });
+  window.agroPhotoSearch=function(kind){
+    const clue=(document.getElementById('photoClue').value||'').trim();
+    const cult=document.getElementById('photoCulture').value;
+    if(!clue){
+      document.getElementById('photoResult').innerHTML='<b>Informe pelo menos uma pista</b> (por exemplo: caruru, pé-de-galinha, percevejo-marrom ou lagarta) para montar a pesquisa.';
+      return;
+    }
+    const q=encodeURIComponent(clue+' '+(cult||'')+' identificação agricultura');
+    const url=kind==='embrapa'
+      ? 'https://www.google.com/search?q=site%3Aembrapa.br+'+q
+      : 'https://www.google.com/search?q='+q;
+    document.getElementById('photoResult').innerHTML='<b>Pesquisa preparada.</b><br>Compare a foto com as fontes encontradas e, depois, registre a ocorrência no Agrogestor.<br><span class="small-note">A foto não substitui a confirmação técnica da espécie.</span>';
+    window.open(url,'_blank');
+  };
+})();
+</script>
+
+
+<style>
+.v13-panel{background:#fff;border:1px solid #d9e3d8;border-radius:16px;padding:16px;margin:12px 0}
+.v13-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.v13-card{background:#f7faf6;border:1px solid #dce6dc;border-radius:14px;padding:14px}
+.v13-input{width:100%;box-sizing:border-box;padding:11px;border:1px solid #cbd8cb;border-radius:10px;margin:5px 0 10px}
+.v13-btn{border:0;border-radius:10px;padding:10px 13px;background:#205b2a;color:#fff;font-weight:700;cursor:pointer;margin:3px}
+.v13-btn.alt{background:#edf3ed;color:#205b2a;border:1px solid #cbd9cc}
+.v13-badge{display:inline-block;padding:4px 8px;border-radius:20px;background:#e5f0e4;margin:3px;font-size:12px}
+.v13-map{height:300px;border-radius:14px;background:linear-gradient(135deg,#dfeedd,#f5f7ee);position:relative;overflow:hidden;border:1px solid #cbdac9}
+.v13-field{position:absolute;border:2px solid #507a4f;background:rgba(80,122,79,.18);border-radius:18px;padding:10px;font-weight:700}
+.v13-f1{left:7%;top:12%;width:30%;height:26%}.v13-f2{left:48%;top:9%;width:42%;height:30%}.v13-f3{left:14%;top:53%;width:34%;height:32%}.v13-f4{left:57%;top:52%;width:28%;height:34%}
+.v13-result{padding:12px;border-radius:12px;background:#f4f8f3;margin-top:10px}
+</style>
+
+<section id="v13Central" class="screen">
+  <div class="v13-panel">
+    <h2>🌾 Agrogestor — Central Agrícola</h2>
+    <p>Mapa dos talhões, catálogo técnico e identificação por foto em um só lugar.</p>
+    <div class="v13-grid">
+      <div class="v13-card"><b>🗺️ Talhões</b><p id="v13Talhoes">0 cadastrados</p></div>
+      <div class="v13-card"><b>🌿 Catálogo</b><p>Daninhas • Insetos • Doenças • Inimigos naturais</p></div>
+      <div class="v13-card"><b>📷 Foto</b><p>Identificação indicativa e pesquisa técnica</p></div>
+    </div>
+  </div>
+
+  <div class="v13-panel">
+    <h3>🗺️ Mapa dos talhões</h3>
+    <div class="v13-map" id="v13Map">
+      <div class="v13-field v13-f1" onclick="v13Talhao('Talhão 1')">Talhão 1<br><span class="v13-badge">Soja</span></div>
+      <div class="v13-field v13-f2" onclick="v13Talhao('Talhão 2')">Talhão 2<br><span class="v13-badge">Milho</span></div>
+      <div class="v13-field v13-f3" onclick="v13Talhao('Talhão 3')">Talhão 3<br><span class="v13-badge">Soja</span></div>
+      <div class="v13-field v13-f4" onclick="v13Talhao('Talhão 4')">Talhão 4<br><span class="v13-badge">Pastagem</span></div>
+    </div>
+    <div class="v13-result" id="v13TalhaoInfo">Toque em um talhão para ver as informações.</div>
+  </div>
+
+  <div class="v13-panel">
+    <h3>🔎 Catálogo técnico pesquisável</h3>
+    <input class="v13-input" id="v13Search" placeholder="Pesquise qualquer planta, inseto, doença ou nome científico...">
+    <select class="v13-input" id="v13Tipo">
+      <option value="">Todos</option><option>Daninha</option><option>Inseto</option><option>Doença</option><option>Inimigo natural</option>
+    </select>
+    <button class="v13-btn" onclick="v13Catalogo()">Pesquisar</button>
+    <div id="v13CatalogoResultado" class="v13-result">Digite o nome que deseja pesquisar.</div>
+  </div>
+
+  <div class="v13-panel">
+    <h3>📷 Identificar por foto</h3>
+    <p>Envie uma foto de uma planta, inseto ou sintoma. A identificação é indicativa e deve ser confirmada antes do manejo.</p>
+    <input id="v13Foto" type="file" accept="image/*" capture="environment" class="v13-input">
+    <input class="v13-input" id="v13Pista" placeholder="Pista opcional: caruru, lagarta, mancha, percevejo...">
+    <select class="v13-input" id="v13Cultura">
+      <option value="">Cultura</option><option>Soja</option><option>Milho</option><option>Algodão</option><option>Pastagem</option><option>Outra</option>
+    </select>
+    <button class="v13-btn" onclick="v13FotoPesquisar()">🔎 Procurar fontes técnicas</button>
+    <div id="v13FotoResultado" class="v13-result">A foto será usada para orientar a pesquisa; o sistema não deve tratar uma sugestão como diagnóstico definitivo.</div>
+  </div>
+</section>
+
+<script>
+(function(){
+  const base=[
+    {n:'Caruru',s:'Amaranthus spp.',t:'Daninha',k:'soja milho',d:'Planta daninha de folhas largas; a identificação da espécie é importante porque espécies de Amaranthus podem apresentar diferenças de manejo.'},
+    {n:'Capim-pé-de-galinha',s:'Eleusine indica',t:'Daninha',k:'soja milho',d:'Gramínea anual; observar identificação e histórico de resistência a herbicidas.'},
+    {n:'Buva',s:'Conyza spp.',t:'Daninha',k:'soja',d:'Planta daninha frequente em sistemas de produção; monitorar estágio e histórico da área.'},
+    {n:'Percevejo-marrom',s:'Euschistus heros',t:'Inseto',k:'soja',d:'Percevejo sugador associado às vagens e grãos; monitorar a lavoura conforme o manejo integrado de pragas.'},
+    {n:'Percevejo-verde',s:'Nezara viridula',t:'Inseto',k:'soja',d:'Percevejo sugador; diferenciar de outras espécies do complexo.'},
+    {n:'Lagarta-da-soja',s:'Anticarsia gemmatalis',t:'Inseto',k:'soja',d:'Lagarta desfolhadora da soja; monitorar população e desfolha.'},
+    {n:'Ferrugem-asiática',s:'Phakopsora pachyrhizi',t:'Doença',k:'soja',d:'Doença foliar importante da soja; confirmar sintomas e acompanhar condições favoráveis.'}
+  ];
+  window.v13Talhao=function(n){document.getElementById('v13TalhaoInfo').innerHTML='<b>'+n+'</b><br>Selecione a cultura, ocorrência ou operação para consultar o histórico deste talhão.'};
+  window.v13Catalogo=function(){
+    const q=(document.getElementById('v13Search').value||'').toLowerCase().trim();
+    const t=document.getElementById('v13Tipo').value;
+    const a=base.filter(x=>(!q||(x.n+' '+x.s+' '+x.t+' '+x.k).toLowerCase().includes(q))&&(!t||x.t===t));
+    const el=document.getElementById('v13CatalogoResultado');
+    if(a.length) el.innerHTML=a.map(x=>'<div style="margin-bottom:12px"><b>'+x.n+'</b> — <i>'+x.s+'</i><br><span class="v13-badge">'+x.t+'</span><br>'+x.d+'<br><button class="v13-btn alt" onclick="v13Fonte(\''+encodeURIComponent(x.n+' '+x.s)+'\')">Fonte técnica</button></div>').join('');
+    else if(q) el.innerHTML='<b>Não está no catálogo local.</b><br>Use a pesquisa ampliada para procurar a expressão em fontes técnicas.<br><button class="v13-btn" onclick="v13Fonte(\''+encodeURIComponent(q)+'\')">Pesquisar fonte técnica</button>';
+    else el.innerHTML='Digite o nome que deseja pesquisar.';
+  };
+  window.v13Fonte=function(q){window.open('https://www.google.com/search?q=site%3Aembrapa.br+'+q,'_blank')};
+  window.v13FotoPesquisar=function(){
+    const p=(document.getElementById('v13Pista').value||'').trim();
+    const c=document.getElementById('v13Cultura').value;
+    if(!p){document.getElementById('v13FotoResultado').innerHTML='<b>Digite uma pista</b> para montar uma pesquisa mais precisa.';return;}
+    const q=encodeURIComponent(p+' '+c+' identificação Embrapa');
+    document.getElementById('v13FotoResultado').innerHTML='<b>Pesquisa preparada.</b><br>Compare a foto com as fontes e confirme a identificação antes de tomar decisão de manejo.';
+    window.open('https://www.google.com/search?q='+q,'_blank');
+  };
+  const n=document.querySelectorAll('.v13-field').length;
+  const e=document.getElementById('v13Talhoes'); if(e)e.textContent=n+' talhões de demonstração';
+})();
+</script>
+
+
+<script id="agrogestor-v14-catalogo">
+(function(){
+ const baseV14=[
+    {n:'Lagarta-da-soja',s:'Anticarsia gemmatalis',t:'Inseto',k:'Soja',d:'Lagarta desfolhadora; comparar coloração, comportamento e padrão de danos.'},
+    {n:'Falsa-medideira',s:'Chrysodeixis includens',t:'Inseto',k:'Soja',d:'Lagarta desfolhadora; conferir modo de locomoção e características do corpo.'},
+    {n:'Falsa-medideira',s:'Rachiplusia nu',t:'Inseto',k:'Soja',d:'Outra falsa-medideira; diferenciação deve considerar características morfológicas.'},
+    {n:'Lagarta-do-velho-mundo',s:'Helicoverpa armigera',t:'Inseto',k:'Soja, Milho',d:'Pode atacar estruturas reprodutivas; confirmar a espécie antes de decidir manejo.'},
+    {n:'Lagarta-das-vagens',s:'Spodoptera cosmioides',t:'Inseto',k:'Soja',d:'Pode atacar folhas e vagens; observar dano e presença de lagartas.'},
+    {n:'Lagarta-das-vagens',s:'Spodoptera eridania',t:'Inseto',k:'Soja',d:'Desfolha e ataque a vagens; diferenciar de outras Spodoptera.'},
+    {n:'Lagarta-do-cartucho',s:'Spodoptera frugiperda',t:'Inseto',k:'Milho, Soja',d:'Importante praga do milho; procurar sinais de raspagem e presença de lagartas.'},
+    {n:'Broca-da-vagem',s:'Etiella zinckenella',t:'Inseto',k:'Soja',d:'Ataca vagens; confirmar presença e dano característico.'},
+    {n:'Percevejo-marrom',s:'Euschistus heros',t:'Inseto',k:'Soja',d:'Percevejo sugador associado às vagens e grãos.'},
+    {n:'Percevejo-verde-pequeno',s:'Piezodorus guildinii',t:'Inseto',k:'Soja',d:'Percevejo sugador; comparar tamanho e características com outras espécies.'},
+    {n:'Percevejo-verde',s:'Nezara viridula',t:'Inseto',k:'Soja',d:'Percevejo sugador; identificação visual deve considerar estágio.'},
+    {n:'Percevejo-barriga-verde',s:'Dichelops spp.',t:'Inseto',k:'Soja, Milho',d:'Grupo de percevejos; confirmar espécie quando necessário.'},
+    {n:'Mosca-branca',s:'Bemisia tabaci',t:'Inseto',k:'Soja, Algodão',d:'Inseto sugador; observar adultos e ninfas na face inferior das folhas.'},
+    {n:'Tripes',s:'Caliothrips spp.',t:'Inseto',k:'Soja',d:'Insetos pequenos associados a folhas; observar raspagem e prateamento.'},
+    {n:'Ácaro-rajado',s:'Tetranychus urticae',t:'Inseto',k:'Soja, Algodão',d:'Ácaro; procurar pontuações, bronzeamento e teias em alta infestação.'},
+    {n:'Lagarta-elasmo',s:'Elasmopalpus lignosellus',t:'Inseto',k:'Soja, Milho',d:'Ataca plântulas e colo; procurar sintomas próximos ao solo.'},
+    {n:'Corós',s:'Phyllophaga spp.',t:'Inseto',k:'Soja',d:'Larvas subterrâneas; verificar raízes e solo em reboleiras.'},
+    {n:'Caruru',s:'Amaranthus spp.',t:'Daninha',k:'Soja, Milho',d:'Grupo de plantas daninhas de folhas largas; identificação da espécie é importante.'},
+    {n:'Buva',s:'Conyza spp.',t:'Daninha',k:'Soja',d:'Planta daninha de folhas largas; observar estádio e histórico da área.'},
+    {n:'Capim-pé-de-galinha',s:'Eleusine indica',t:'Daninha',k:'Soja, Milho',d:'Gramínea; observar touceira, folhas e inflorescência.'},
+    {n:'Capim-amargoso',s:'Digitaria insularis',t:'Daninha',k:'Soja, Milho',d:'Gramínea perene; identificar corretamente e considerar histórico de resistência.'},
+    {n:'Trapoeraba',s:'Commelina spp.',t:'Daninha',k:'Soja, Milho',d:'Folhas e hábito característicos; diferenciar espécies.'},
+    {n:'Picão-preto',s:'Bidens spp.',t:'Daninha',k:'Soja, Milho',d:'Folhas opostas e estruturas reprodutivas características.'},
+    {n:'Leiteiro',s:'Euphorbia heterophylla',t:'Daninha',k:'Soja',d:'Folhas variáveis; presença de látex auxilia na identificação.'},
+    {n:'Corda-de-viola',s:'Ipomoea spp.',t:'Daninha',k:'Soja',d:'Trepadeira; observar folhas e flores.'},
+    {n:'Nabiça',s:'Raphanus raphanistrum',t:'Daninha',k:'Soja',d:'Folhas lobadas e hábito de planta daninha de folha larga.'},
+    {n:'Ferrugem-asiática',s:'Phakopsora pachyrhizi',t:'Doença',k:'Soja',d:'Doença foliar; confirmação deve considerar sintomas e estruturas do patógeno.'},
+    {n:'Mancha-alvo',s:'Corynespora cassiicola',t:'Doença',k:'Soja',d:'Lesões foliares que podem apresentar padrão concêntrico.'},
+    {n:'Crestamento de Cercospora',s:'Cercospora kikuchii',t:'Doença',k:'Soja',d:'Pode afetar folhas, hastes e sementes; avaliar sintomas no conjunto.'},
+    {n:'Antracnose',s:'Colletotrichum truncatum',t:'Doença',k:'Soja',d:'Pode afetar diferentes órgãos; confirmar pelos sintomas característicos.'},
+    {n:'Mofo-branco',s:'Sclerotinia sclerotiorum',t:'Doença',k:'Soja',d:'Podridão de tecidos e estruturas do fungo; observar condições da área.'},
+    {n:'Oídio',s:'Erysiphe diffusa',t:'Doença',k:'Soja',d:'Crescimento pulverulento branco na superfície foliar.'},
+    {n:'Mancha-parda',s:'Septoria glycines',t:'Doença',k:'Soja',d:'Manchas foliares; diferenciar de outras doenças por sintomas e evolução.'},
+    {n:'Míldio',s:'Peronospora manshurica',t:'Doença',k:'Soja',d:'Pode formar sintomas na folha; confirmação exige avaliação técnica.'},
+    {n:'Joaninha',s:'Coccinellidae',t:'Inimigo natural',k:'Soja, Milho',d:'Predador de pulgões e outros pequenos artrópodes; preservar inimigos naturais.'},
+    {n:'Crisopídeo',s:'Chrysopidae',t:'Inimigo natural',k:'Soja, Milho',d:'Larvas são predadoras; importante em programas de manejo integrado.'}
+ ];
+ window.v14CatalogoData=baseV14;
+ window.v14Pesquisar=function(){
+   const q=(document.getElementById('v13Search')?.value||'').toLowerCase().trim();
+   const t=document.getElementById('v13Tipo')?.value||'';
+   const el=document.getElementById('v13CatalogoResultado');
+   const a=baseV14.filter(x=>
+      (!q || (x.n+' '+x.s+' '+x.t+' '+x.k+' '+x.d).toLowerCase().includes(q)) &&
+      (!t || x.t===t)
+   );
+   if(!a.length){
+      el.innerHTML='<b>Nenhum resultado local.</b><br>Pesquise por nome popular, nome científico ou categoria e use a busca ampliada em fonte técnica.';
+      return;
+   }
+   el.innerHTML='<b>'+a.length+' resultado(s) encontrado(s)</b><hr>'+
+     a.map(x=>'<div style="margin-bottom:14px"><b>'+x.n+'</b> — <i>'+x.s+'</i><br><span class="v13-badge">'+x.t+'</span> <span class="v13-badge">'+x.k+'</span><br>'+x.d+
+     '<br><button class="v13-btn alt" onclick="v13Fonte(encodeURIComponent(\''+x.n+' '+x.s+'\'))">📚 Fonte técnica</button>'+
+     '<button class="v13-btn" onclick="alert(\'Item selecionado: '+x.n+' — pronto para registrar ocorrência no próximo módulo.\')">➕ Registrar ocorrência</button></div>').join('');
+ };
+ const old=window.v13Catalogo;
+ window.v13Catalogo=window.v14Pesquisar;
+})();
+</script>
+
+<style id="agrogestor-v15-mobile">
+:root{--ag-green:#205b2a;--ag-light:#f3f7f1}
+@media(max-width:700px){
+ body{margin:0!important;padding-bottom:78px!important;font-size:16px!important}
+ button,.v13-btn{min-height:48px!important;font-size:15px!important}
+ input,select,textarea{min-height:46px!important;font-size:16px!important}
+ .v13-grid{grid-template-columns:1fr!important}
+ .v13-map{height:330px!important}
+ .v13-field{font-size:14px!important}
+ .mobile-nav{position:fixed;left:0;right:0;bottom:0;height:68px;background:#fff;border-top:1px solid #d5dfd4;display:flex;z-index:9999;box-shadow:0 -3px 12px rgba(0,0,0,.08)}
+ .mobile-nav button{flex:1;border:0;background:#fff;color:#244b29;font-weight:700;font-size:11px;padding:4px 2px;min-height:68px!important}
+ .mobile-nav button span{display:block;font-size:23px;line-height:27px}
+ .mobile-header{position:sticky;top:0;z-index:999;background:#fff;border-bottom:1px solid #dce5da;padding:10px 12px;font-weight:800}
+ .quick-actions{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+ .quick-actions button{border:0;border-radius:13px;background:var(--ag-light);color:var(--ag-green);font-weight:800;padding:12px}
+}
+@media(min-width:701px){.mobile-nav,.mobile-header{display:none}}
+</style>
+<div class="mobile-header">🌾 Agrogestor <small style="float:right;font-weight:500">Campo</small></div>
+<div class="mobile-nav">
+ <button onclick="agroHome()"><span>🏠</span>Início</button>
+ <button onclick="agroTalhoes()"><span>🗺️</span>Talhões</button>
+ <button onclick="agroFoto()"><span>📷</span>Foto</button>
+ <button onclick="agroCatalogo()"><span>🌿</span>Catálogo</button>
+ <button onclick="agroMaquinas()"><span>🚜</span>Máquinas</button>
+</div>
+<script>
+function agroHome(){window.scrollTo({top:0,behavior:'smooth'});}
+function agroFoto(){const x=document.getElementById('pesquisaFoto'); if(x)x.scrollIntoView({behavior:'smooth'}); else alert('Abra o módulo de identificação por foto.');}
+function agroCatalogo(){const x=document.getElementById('v13Search'); if(x){x.scrollIntoView({behavior:'smooth'});x.focus();}else alert('Abra Daninhas e Insetos.');}
+function agroTalhoes(){const x=document.querySelector('.v13-map'); if(x)x.scrollIntoView({behavior:'smooth'}); else alert('Abra o mapa dos talhões.');}
+function agroMaquinas(){const x=[...document.querySelectorAll('h2,h3')].find(e=>/máquin/i.test(e.textContent)); if(x)x.scrollIntoView({behavior:'smooth'}); else alert('Abra o módulo Máquinas.');}
+</script>
+</body></html>
